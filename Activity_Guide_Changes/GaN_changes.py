@@ -21,7 +21,8 @@ import docxtopdf as dtp
 
 wdFormatPDF = 17
 
-#imports each module, tells user if import is successful or not
+#imports each module, tells user if import is successful or not, prevents program
+#from crashing if a module cannot be imported
 for module in imports:
     try:
         print("Importing necessary modules...")
@@ -45,6 +46,7 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches
 import pandas
 
+#opens document that will be edited
 def open_word_doc(filename):
     document = Document(filename)
     
@@ -88,7 +90,7 @@ south_cons = south_cons_df['Constellations']
 north_dates = north_cons_df['Dates']
 south_dates = south_cons_df['Dates']
 
-#updates the constellation, creates a variable to hold the new constellation, uses the old constellation
+#updates the constellation: creates a variable to hold the new constellation, uses the old constellation
 #information to find the new constellation
 print(north_cons, north_dates, south_cons, south_dates)
 new_constellation_north = {}
@@ -447,7 +449,7 @@ for key, value in new_constellation_north.items():
         k = 0
         l = 0              
         for table in working_doc.tables:
-            #inserts the pictures cropped based on magnitude
+            #inserts the approprite cropped pictures based on magnitude
             Big_picture_cells = (table.cell(1,0), table.cell(1,2), table.cell(4,0), table.cell(4,2))
             small_picture_cells = (table.cell(1,0), table.cell(1,1), table.cell(1,2), table.cell(1,3), table.cell(3,0), table.cell(3,1), table.cell(3,2), table.cell(3,3))
             
