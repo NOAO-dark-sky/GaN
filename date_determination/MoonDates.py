@@ -1,4 +1,5 @@
 import csv
+#ephem can perform astronomical calculations
 import ephem as ep
 import numpy as np
 import pandas as pd
@@ -10,6 +11,7 @@ localFormat = "%Y/%m/%d %H:%Mi:%S"
 counter_old = 0
 counter_new = 0
 
+#use ephem to access built in cities
 Munich = ep.city("Munich")
 Boston = ep.city("Boston")
 Mexico_City = ep.city("Mexico City")
@@ -43,6 +45,7 @@ number_to_city = {0 : "Munich",
         8 : "Brisbane",
         9 : "Cape_Town"}
 
+#access city latitude using ephem
 City_lats = {"Munich" : Munich.lat,
         "Boston" : Boston.lat,
         "Mexico_City" : Mexico_City.lat,
@@ -72,10 +75,12 @@ Southern_Cities = ["Auckland", "Brisbane", "Cape_Town"]
 moon = ep.Moon()
 sun = ep.Sun()
 
+#open file, enter in moon headers (start, end, moon phase)
 with open('Moon_Dates_qv.csv', mode = 'w+') as f:
     moon_writer = csv.writer(f,delimiter = ',' , quotechar = '"')
     moon_writer.writerow(['Start', 'End','Moon Phase'])
 
+#open file, enter in moon headers (latitude, year, month, etc)
 with open('Moon_Dates.csv', mode = 'w+') as f:
     moon_writer = csv.writer(f,delimiter = ',' , quotechar = '"')
     moon_writer.writerow(['Latitude', 'Year', 'Month', 'Day', 'Moon Phase', 'Sunset Time (local)', 'Moonrise Time (local)', 'Moonset Time (local)'])
@@ -84,7 +89,9 @@ moon.compute(Munich)
 old_phase = moon.phase
 #Compute the next setting and rising times for the moon
 for i in range(3650 * 4):
-
+    #set horizon to a negative value, horizon: the altitude of the upper limb of a body at the moment
+    #you consider it to be rising and setting
+    #https://rhodesmill.org/pyephem/quick.html
     Munich.horizon = '-12'
     Boston.horizon = '-12'
     Mexico_City.horizon = '-12'
@@ -109,7 +116,7 @@ for i in range(3650 * 4):
         Brisbane.date = S9
         Cape_Town.date = S0
 
-
+    #calculate when the sun sets at each city, use the center of the sun to tell when the sun sets (time, day, month, and year)
     S1 = Munich.next_setting(sun, use_center = True) 
     S2 = Boston.next_setting(sun, use_center = True) 
     S3 = Mexico_City.next_setting(sun, use_center = True) 
@@ -136,6 +143,7 @@ for i in range(3650 * 4):
         Brisbane.date = M9
         Cape_Town.date = M0
 
+    #ignore PyEphem refrection
     Munich.horizon = '-0:34'
     Boston.horizon = '-0:34'
     Mexico_City.horizon = '-0:34'
@@ -147,6 +155,7 @@ for i in range(3650 * 4):
     Brisbane.horizon = '-0:34'
     Cape_Town.horizon = '-0:34'
 
+    #calculate when the moon sets at each city (time, day, month, year)
     M1 = Munich.next_setting(moon) 
     M2 = Boston.next_setting(moon) 
     M3 = Mexico_City.next_setting(moon) 
@@ -173,6 +182,7 @@ for i in range(3650 * 4):
         Brisbane.date = r9
         Cape_Town.date = r0
 
+    #calculates when the moon rises at each city
     r1 = Munich.next_rising(moon)
     r2 = Boston.next_rising(moon)
     r3 = Mexico_City.next_rising(moon)
@@ -195,7 +205,7 @@ for i in range(3650 * 4):
     final_countdown = 0
     new_phase = ep.Moon(M8).phase 
     for city in range(10):
-        
+        #record each city's moonrise, moonset, and sunset
         rise_t = all_rise_and_set_times["moonrise"][city]
         set_t = all_rise_and_set_times["moonset"][city]
         sunset_t = all_rise_and_set_times["sunset"][city]

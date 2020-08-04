@@ -2,6 +2,7 @@ import sys
 import os
 import comtypes.client
 
+#open word document, save as a pdf
 def docxtopdf():
     master_direct = os.getcwd()
 

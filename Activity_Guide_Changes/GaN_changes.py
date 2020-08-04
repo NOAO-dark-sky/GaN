@@ -20,7 +20,9 @@ import importlib
 import docxtopdf as dtp
 
 wdFormatPDF = 17
-  
+
+#imports each module, tells user if import is successful or not, prevents program
+#from crashing if a module cannot be imported
 for module in imports:
     try:
         print("Importing necessary modules...")
@@ -44,11 +46,13 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches
 import pandas
 
+#opens document that will be edited
 def open_word_doc(filename):
     document = Document(filename)
     
     return document
 
+#crops an image based on the magnitude, saves image as png
 def cut_star_chart(filename):
     
     cut_points = {
@@ -73,16 +77,21 @@ def cut_star_chart(filename):
 
 lang = googletrans.LANGUAGES
 
+#read in the excel sheets for both the north and south constellations
 north_cons_df = pandas.read_excel('GaN_cons_and_dates.xlsx',sheet_name = 'North', index_col = None)
 
 south_cons_df = pandas.read_excel('GaN_cons_and_dates.xlsx',sheet_name = 'South', index_col = None)
 print(north_cons_df)
+
+#store constellation and date information in respective variables
 north_cons = north_cons_df['Constellations']
 south_cons = south_cons_df['Constellations']
 
 north_dates = north_cons_df['Dates']
 south_dates = south_cons_df['Dates']
 
+#updates the constellation: creates a variable to hold the new constellation, uses the old constellation
+#information to find the new constellation
 print(north_cons, north_dates, south_cons, south_dates)
 new_constellation_north = {}
 new_constellation_south = {}
@@ -100,7 +109,7 @@ year = 2020
 Thai_year = year + 543
 
 
-
+#updating southern hemisphere information (constellation, date, text displayed to user)
 South_constellation_replacement = {
         "Chilean_Spanish" : "Scorpius",
         "English" : "Scorpius",
@@ -146,7 +155,7 @@ South_heading_last = {
         "Spanish" : ": "
         }
 
-
+#updating northern hemisphere information (constellation, date, text displayed to user)
 North_constellation_replacement = {
         
         "Catalan" : "Perseus",
@@ -173,12 +182,14 @@ North_constellation_replacement = {
         }
 
 language_translate = {}
+#goes through North_constellation_replacement and stores which language to translate to into language_translate
 for key, value in North_constellation_replacement.items():
     for code, langs in lang.items():
         if key == "Chinese":
             language_translate[key] = "zh-cn"
         if key == langs.capitalize():
             language_translate[key] = code
+#goes through South_constellation_replacement and stores which language to translate to into language_translate
 for key, value in South_constellation_replacement.items():
      for code, langs in lang.items():
          if key == "Chilean_Spanish":
@@ -357,6 +368,7 @@ for key, value in new_constellation_north.items():
         save_name = "GaN" + str(year) + "_ActivityGuide_" + str(key) + "_N_" + str(language) + ".docx"
         save_name_pdf = "GaN" + str(year) + "_ActivityGuide_" + str(key) + "_N_" + str(language) + ".pdf"
         
+	#create the path to the updated activity guide
         total_path = os.path.join(save_path, save_name)
         total_path_pdf = os.path.join(save_path, save_name_pdf)
         print(language)
@@ -364,13 +376,15 @@ for key, value in new_constellation_north.items():
         try:
             new_dates_trans = mtranslate.translate(value, language_translate[language],"en")
             new_cons_trans = mtranslate.translate(key, language_translate[language],"en")
+	#if trying to translate the dates and constellations takes too much time, try again
         except TimeoutError:
             time.sleep(10)
             new_dates_trans = mtranslate.translate(value, language_translate[language],"en")
             new_cons_trans = mtranslate.translate(key, language_translate[language],"en")
         
         working_doc = open_word_doc("GaN2018_ActivityGuide_Perseus_N_" + str(language) + ".docx")  
- 
+ 	
+	#collect information from previous activity guide to keep future activity guides consistent
         obj_styles = working_doc.styles
         obj_charstyle = obj_styles.add_style('GaNStyle', WD_STYLE_TYPE.CHARACTER)
         obj_font = obj_charstyle.font
@@ -389,12 +403,13 @@ for key, value in new_constellation_north.items():
         obj_font3.name = 'Calibri'
         obj_font3.size = Pt(9.5)
         
-             
+        #goes through the word document and updates constellation and date information   
         for paragraph in working_doc.paragraphs:
             if constellation in paragraph.text:
                 if North_date_replacement[language] in paragraph.text:
-                    
+                  
                     paragraph.clear()
+			
                     if language in CountryList1:
 					
                         paragraph.add_run(North_heading_first[language] + str(new_dates_trans) + North_heading_middle[language] + str(new_cons_trans) + North_heading_last[language], style = 'GaNStyle')
@@ -411,7 +426,7 @@ for key, value in new_constellation_north.items():
                             paragraph.add_run(North_heading_first[language] + str(Thai_year) + North_heading_middle[language] + str(new_cons_trans) + North_heading_last[language] + str(new_dates_trans) + ".", style = 'GaNStyle')        
             
                 else:
-                    paragraph.clear()
+                    paragraph.clear() #delete paragraph that is no longer relevant to current campaign
                     if (language != 'Japanese'):
                     
                         paragraph.add_run(First_Paragraph_first[language] + str(new_cons_trans) + First_Paragraph_last[language], style = 'GaNParagraph')
@@ -419,7 +434,7 @@ for key, value in new_constellation_north.items():
                     else:
                         
                         paragraph.add_run(First_Paragraph_first[language] + First_Paragraph_last[language], style = 'GaNParagraph')
-						
+	    #updates the year in the websites				
             if website1 in paragraph.text:
                 new_text = paragraph.text.replace("2018",str(year))
                 paragraph.text = None
@@ -434,7 +449,7 @@ for key, value in new_constellation_north.items():
         k = 0
         l = 0              
         for table in working_doc.tables:
-            
+            #inserts the approprite cropped pictures based on magnitude
             Big_picture_cells = (table.cell(1,0), table.cell(1,2), table.cell(4,0), table.cell(4,2))
             small_picture_cells = (table.cell(1,0), table.cell(1,1), table.cell(1,2), table.cell(1,3), table.cell(3,0), table.cell(3,1), table.cell(3,2), table.cell(3,3))
             
@@ -460,6 +475,7 @@ for key, value in new_constellation_north.items():
     print("Done working on constellation {cons}\n".format(cons = key))
     print("_____________________________________________________________\n")                        
 
+#begin the process again to update the southern hemisphere activity guides
 for key,value in new_constellation_south.items():
     try:
         os.mkdir("GaN{year}_ActivityGuide_{cons}_S".format(year = year, cons = key))
