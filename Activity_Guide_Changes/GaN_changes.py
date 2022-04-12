@@ -110,6 +110,9 @@ Thai_year = year + 543
 
 
 #updating southern hemisphere information (constellation, date, text displayed to user)
+#######################################################################################
+########################All the information that needs to change#######################
+#######################################################################################
 South_constellation_replacement = {
         "Chilean_Spanish" : "Scorpius",
         "English" : "Scorpius",
@@ -180,22 +183,6 @@ North_constellation_replacement = {
         "Thai" : "เซอุส"
             
         }
-
-language_translate = {}
-#goes through North_constellation_replacement and stores which language to translate to into language_translate
-for key, value in North_constellation_replacement.items():
-    for code, langs in lang.items():
-        if key == "Chinese":
-            language_translate[key] = "zh-cn"
-        if key == langs.capitalize():
-            language_translate[key] = code
-#goes through South_constellation_replacement and stores which language to translate to into language_translate
-for key, value in South_constellation_replacement.items():
-     for code, langs in lang.items():
-         if key == "Chilean_Spanish":
-             language_translate[key] = "es"
-         if key == langs.capitalize():
-             language_translate[key] = code
     
 North_date_replacement = {
         
@@ -348,6 +335,37 @@ First_Paragraph_last = {
 
 }
 
+##################################################################################################
+##################################################################################################
+###	End of the changes section defining things that need to be changed			###
+##################################################################################################
+##################################################################################################
+
+#1date2con3
+CountryList1 = ("Czech")
+#1con2year3date
+CountryList2 = ("Chinese", "Finnish", "Serbian", "Swedish")
+#1year2Con3date
+CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
+
+language_translate = {}
+#goes through North_constellation_replacement and stores which language to translate to into language_translate
+for key, value in North_constellation_replacement.items():
+    for code, langs in lang.items():
+        if key == "Chinese":
+            language_translate[key] = "zh-cn"
+        if key == langs.capitalize():
+            language_translate[key] = code
+#goes through South_constellation_replacement and stores which language to translate to into language_translate
+for key, value in South_constellation_replacement.items():
+     for code, langs in lang.items():
+         if key == "Chilean_Spanish":
+             language_translate[key] = "es"
+         if key == langs.capitalize():
+             language_translate[key] = code
+
+
+#Be sure to change the websites
 website1 = "astro/maps/GaNight/2018/"
 website2 = "astro/maps/GaNight/2019/"
 
@@ -583,5 +601,5 @@ for key,value in new_constellation_south.items():
 
 
 
-
+#If it is possible to convert them to pdfs on your system this will run, otherwise it will throw an error.
 dtp.docxtopdf()
