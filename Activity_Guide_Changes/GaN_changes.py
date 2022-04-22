@@ -17,7 +17,8 @@ Items that still need to be added
 imports = ['mtranslate', 'googletrans', 'os', 'time', 'PIL', 'docx']
 import subprocess, sys
 import importlib
-import docxTopdf as dtp
+#The right name of the file is docxToPdf
+import docxToPdf as dtp
 
 wdFormatPDF = 17
 

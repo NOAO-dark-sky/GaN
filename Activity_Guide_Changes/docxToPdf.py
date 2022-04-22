@@ -18,7 +18,8 @@ def docxtopdf():
                     out_file2 = out_file1[:-4] + 'pdf'
                     word = comtypes.client.CreateObject('Word.Application')
                     doc = word.Documents.Open(in_file)
-                    doc.SaveAs(out_file, FileFormat=wdFormatPDF)
+                    #out_file2 is The PDF file expected as the outcome
+                    doc.SaveAs(out_file2, FileFormat=wdFormatPDF)
                     doc.Close()
                     word.Quit()
 
