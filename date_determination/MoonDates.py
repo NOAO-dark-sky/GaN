@@ -294,10 +294,12 @@ for i in range(3650 * 4):
 
 #Time to determine which constellations go where. We will use skyfield
 #Install Skyfield
-import skyfield as sf
+#Change the import statement for a specifically use of , https://rhodesmill.org/skyfield/
+from skyfield.api import load
+from skyfield.data import hipparcos
 
-with sf.api.load.open(sf.data.hipparcos.URL) as f:
+with load.open(hipparcos.URL) as f:
     df = hipparcos.load_dataframe(f)
 
-
-north_constellation_check = {"Perseus" : , 
+#Search into the Dictionary
+north_constellation_check = {"Perseus" : []}
