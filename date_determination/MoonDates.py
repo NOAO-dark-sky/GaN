@@ -1,5 +1,6 @@
 import csv
 #ephem can perform astronomical calculations
+#Install Ephem
 import ephem as ep
 import numpy as np
 import pandas as pd
@@ -291,7 +292,8 @@ for i in range(3650 * 4):
 
 
 
-#Time to determine which constellations go where. We will use skyfield 
+#Time to determine which constellations go where. We will use skyfield
+#Install Skyfield
 import skyfield as sf
 
 with sf.api.load.open(sf.data.hipparcos.URL) as f:

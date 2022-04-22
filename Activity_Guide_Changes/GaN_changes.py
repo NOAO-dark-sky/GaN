@@ -17,7 +17,7 @@ Items that still need to be added
 imports = ['mtranslate', 'googletrans', 'os', 'time', 'PIL', 'docx']
 import subprocess, sys
 import importlib
-import docxtopdf as dtp
+import docxTopdf as dtp
 
 wdFormatPDF = 17
 
@@ -38,9 +38,11 @@ for module in imports:
         importlib.import_module(module)
         print("Import and install of " + module + " successful.")
 
+# Is needed to Install mtranslate and googletrans
 import mtranslate, googletrans, os, time       
 from shutil import rmtree
 from PIL import Image
+#Install python-docx library
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches

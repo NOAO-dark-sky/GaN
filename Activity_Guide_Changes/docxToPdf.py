@@ -1,5 +1,6 @@
 import sys
 import os
+#Is needed to install comtypes package
 import comtypes.client
 
 #open word document, save as a pdf

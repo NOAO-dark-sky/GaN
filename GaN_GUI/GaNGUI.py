@@ -4,6 +4,7 @@
 ##############################################
 
 from tkinter import *
+#Is needed to Install Pillow Package
 from PIL import ImageTk, Image
 import tkinter.messagebox 
 
