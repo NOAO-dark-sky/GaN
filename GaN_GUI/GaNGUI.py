@@ -32,7 +32,9 @@ def generalInformation():
 
 def darkSkyImage():
     #used information from https://pythonbasics.org/tkinter-image/ to upload an image
-    img = Image.open("globeAtNightLogo.png")
+    #Fix the rout of the image file adjusting an "r" before the string, to convert into raw string
+    #Change the path of the image
+    img = Image.open(r"C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\GaN_GUI\globeAtNightLogo.png")
     scaled = img.resize((240, 180), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(scaled)
     finalImg = Label(image = render)
