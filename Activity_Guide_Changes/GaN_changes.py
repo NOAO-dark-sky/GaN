@@ -81,9 +81,9 @@ def cut_star_chart(filename):
 lang = googletrans.LANGUAGES
 
 #read in the excel sheets for both the north and south constellations
-north_cons_df = pandas.read_excel('GaN_cons_and_dates.xlsx',sheet_name = 'North', index_col = None)
+north_cons_df = pandas.read_excel(r"C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx",sheet_name = 'North', index_col = None)
 
-south_cons_df = pandas.read_excel('GaN_cons_and_dates.xlsx',sheet_name = 'South', index_col = None)
+south_cons_df = pandas.read_excel(r"C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx",sheet_name = 'South', index_col = None)
 print(north_cons_df)
 
 #store constellation and date information in respective variables
@@ -380,7 +380,7 @@ for key, value in new_constellation_north.items():
     except:
         rmtree(os.path.join(os.getcwd(),"GaN{year}_ActivityGuide_{cons}_N".format(year = year, cons = key)))
         os.mkdir("GaN{year}_ActivityGuide_{cons}_N".format(year = year, cons = key))
-    cut_star_chart("30-{constellation}-1.png".format(constellation = key))
+    cut_star_chart(r"30-{constellation}-1.png".format(constellation = key))
     print("_____________________________________________________________\n")
     print("Working on constellation {cons}\n".format(cons = key))
     #replace the translations in the proper places
