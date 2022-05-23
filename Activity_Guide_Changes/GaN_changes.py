@@ -10,17 +10,38 @@ import pandas as pd
 from shutil import rmtree
 
 # Get Data from the Excel File using Pandas
-dfnorth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='North')
-dfsouth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='South')
+# Capitalize  constellations names for a later comparison
+dfNorth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='North')
+dfNorth['Constellations'] = dfNorth['Constellations'].str.capitalize()
 
-#Get Dates From North and South Constellations
-NorthConsUser = str(input("Please enter the name of the North Constellation: "))
-NorthDateUser=dfnorth.loc[dfnorth['Constellations'] == NorthConsUser, 'Dates'].iloc[0]
-print(NorthDateUser)
+dfSouth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='South')
+dfSouth['Constellations'] = dfSouth['Constellations'].str.capitalize()
 
-SouthConsUser = str(input("Please enter the name of the South Constellation: "))
-SouthDateUser=dfsouth.loc[dfsouth['Constellations'] == SouthConsUser, 'Dates'].iloc[0]
-print(SouthDateUser)
+# Validate the constellation names getting from the user according to the Excel file.
+# Get Dates From North and South Constellations
+northConsUser = str(input("Please enter the name of the North Constellation: "))
+northConsUser = northConsUser.capitalize()
+validateNorth = northConsUser in dfNorth['Constellations'].values
+while validateNorth == False:
+    northConsUser = str(input("Please enter the a valid name for the North Constellation: "))
+    northConsUser = northConsUser.capitalize()
+    validateNorth = northConsUser in dfNorth['Constellations'].values
+else:
+    northDateUser=dfNorth.loc[dfNorth['Constellations'] == northConsUser, 'Dates'].iloc[0]
+    print(northDateUser)
+
+southConsUser = str(input("Please enter the name of the South Constellation: "))
+southConsUser = southConsUser.capitalize()
+validateSouth = southConsUser in dfSouth['Constellations'].values
+while validateNorth == False:
+    southConsUser = str(input("Please enter a valid name for the South Constellation: "))
+    southConsUser = southConsUser.capitalize()
+    validateSouth = southConsUser in dfSouth['Constellations'].values
+else:
+    southDateUser=dfSouth.loc[dfSouth['Constellations'] == southConsUser, 'Dates'].iloc[0]
+    print(southDateUser)
+
+
 
 
 
