@@ -2,19 +2,22 @@
 # Install python-docx for managing the Word Files.
 # Install Pandas to manage the Excel file and bring the information
 # Import Shutil to remove the directory
-import mtranslate, googletrans, os, time      
+import mtranslate, googletrans, os, time, sys    
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches
 import pandas as pd
 from shutil import rmtree
 
+# Define the path for the excel file
+excelPath = os.path.join(sys.path[0],"GaN_cons_and_dates.xlsx")
+
 # Get Data from the Excel File using Pandas
 # Capitalize  constellations names for a later comparison
-dfNorth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='North')
+dfNorth = pd.read_excel (excelPath,sheet_name='North')
 dfNorth['Constellations'] = dfNorth['Constellations'].str.capitalize()
 
-dfSouth = pd.read_excel (r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx',sheet_name='South')
+dfSouth = pd.read_excel (excelPath,sheet_name='South')
 dfSouth['Constellations'] = dfSouth['Constellations'].str.capitalize()
 
 # Validate the constellation names getting from the user according to the Excel file.
