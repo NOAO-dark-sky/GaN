@@ -6,6 +6,7 @@ import mtranslate, googletrans, os, time, sys
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches
+from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
 
@@ -145,8 +146,81 @@ for key, value in North_constellation_replacement.items():
 for language, constellation in North_constellation_replacement.items():
     # Define the Word file path
     wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
-    working_doc = openWordDoc(wordPath + str(language) + ".docx") 
+    workingDoc = openWordDoc(wordPath + str(language) + ".docx") 
     print("_____________________________________________________________\n")
     print("Working on {language} language\n".format(language = key))
 
+    #collect information from previous activity guide to keep future activity guides consistent
+    obj_styles = workingDoc.styles
+    obj_charstyle = obj_styles.add_style('GaNStyle', WD_STYLE_TYPE.CHARACTER)
+    obj_font = obj_charstyle.font
+    obj_font.name = 'Calibri'
+    obj_font.size = Pt(12)
+        
+    obj_styles2 = workingDoc.styles
+    obj_charstyle2 = obj_styles2.add_style('GaNParagraph', WD_STYLE_TYPE.CHARACTER)
+    obj_font2 = obj_charstyle2.font
+    obj_font2.name = 'Calibri'
+    obj_font2.size = Pt(10)
+        
+    obj_styles3 = workingDoc.styles
+    obj_charstyle3 = obj_styles3.add_style('GaNLinks', WD_STYLE_TYPE.CHARACTER)
+    obj_font3 = obj_charstyle3.font
+    obj_font3.color.rgb = RGBColor(51, 102, 187)
+    obj_font3.name = 'Calibri'
+    obj_font3.size = Pt(9.5)
+    obj_font3.underline =True
+
+    #goes through the word document and updates constellation and date information   
+    for paragraph in workingDoc.paragraphs:
+        if constellation in paragraph.text:
+            if North_date_replacement[language] in paragraph.text:
+                
+                paragraph.clear()
+        
+                if language in CountryList1:
+                
+                    paragraph.add_run(North_heading_first[language] + str(northDateUser) + North_heading_middle[language] + str(northConsUser) + North_heading_last[language], style = 'GaNStyle')
+                    
+                elif language in CountryList2:
+                
+                    paragraph.add_run(North_heading_first[language] + str(northConsUser) + North_heading_middle[language] + str(year) + North_heading_last[language] + str(northDateUser) + ".", style = 'GaNStyle')
+                
+                elif language in CountryList3:
+                
+                    if language != "Thai":
+                        paragraph.add_run(North_heading_first[language] + str(year) + North_heading_middle[language] + str(northConsUser) + North_heading_last[language] + str(northDateUser) + ".", style = 'GaNStyle')
+                    else:
+                        paragraph.add_run(North_heading_first[language] + str(Thai_year) + North_heading_middle[language] + str(northConsUser) + North_heading_last[language] + str(northDateUser) + ".", style = 'GaNStyle')        
+        
+            else:
+                paragraph.clear() #delete paragraph that is no longer relevant to current campaign
+                if (language != 'Japanese'):
+                
+                    paragraph.add_run(First_Paragraph_first[language] + str(northConsUser) + First_Paragraph_last[language], style = 'GaNParagraph')
+                        
+                else:
+                    
+                    paragraph.add_run(First_Paragraph_first[language] + First_Paragraph_last[language], style = 'GaNParagraph')
+        
+        #updates the year in the websites
+        #Be sure to change the websites
+        website1 = "astro/maps/GaNight/2018/"
+        website2 = "astro/maps/GaNight/2019/"				
+        if website1 in paragraph.text:
+            new_text = paragraph.text.replace("2018",str(year))
+            paragraph.text = None
+            paragraph.add_run(new_text, style = 'GaNLinks')
+            
+        elif website2 in paragraph.text:
+            new_text = paragraph.text.replace("2019",str(year))
+            paragraph.text = None
+            paragraph.add_run(new_text, style = 'GaNLinks')
+            
+    newWordPath = os.path.abspath("..\Gan\GaN\docs_changed\GaN{year}_ActivityGuide_{cons}_/".format(year = year, cons = northConsUser))
+    newWordPath = os.path.join(newWordPath + str(language) + ".docx")
+    workingDoc.save(newWordPath)
     
+    print(language + " activity guide is done.\n")
+    print("Done working on constellation {cons}\n".format(cons = northConsUser))
+    print("_____________________________________________________________\n")
