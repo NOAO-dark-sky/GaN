@@ -1,34 +1,52 @@
-import os
-from os import getcwd
-from docx import Document
+import googletrans
 
-def openWordDoc(filename):
-    document = Document(filename)
-    return document
+North_constellation_replacement = {
+        
+        "Catalan" : "Perseus",
+        "Chinese" : "英仙座",
+        "Czech" : "Persea",
+        "English" : "Perseus",
+        "Finnish" : "Perseus" ,
+        "French" : "Persée" ,    
+        "Galician" : "Perseo",
+        "German" : "Perseus",
+        "Greek" : "Περσεύς",
+        "Indonesian" : "Perseus",
+        "Japanese" : "ペルセウス",
+        "Polish" : "Perseusz",
+        "Portuguese" : "Perseu",
+        "Romanian" : "Perseu",
+        "Serbian" : "Персеус",
+        "Slovak" : "Perseus",
+        "Slovenian" : "Perseus",
+        "Spanish" : "Perseo",
+        "Swedish" : "Perseus",
+        "Thai" : "เซอุส"
+            
+        }
 
-#new = getcwd() 
-#new = os.path.join(new + '\GaN\docs_changed\Hello')
-#os.mkdir(new)
-#print(new)
+lang = googletrans.LANGUAGES
 
-#new =getcwd()
-#print(new)
+#1date2con3
+CountryList1 = ("Czech")
+#1con2year3date
+CountryList2 = ("Chinese", "Finnish", "Serbian", "Swedish")
+#1year2Con3date
+CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
 
-year = 2022
-northConsUser= {"Orion": 1, "Taurus": 2, "Hercules": 3}
-language = {"English": "a", "Spanish": "b", "German": "c"}
+language_translate = {}
+#goes through North_constellation_replacement and stores which language to translate to into language_translate
+for language, constName in North_constellation_replacement.items():
+    for code, langs in lang.items():
+        if language == "Chinese":
+            language_translate[language] = "zh-cn"
+        if language == langs.capitalize():
+            language_translate[language] = code
+        
 
-wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
-workingDoc = openWordDoc(wordPath + "English" + ".docx")
 
-northConsUser= {"Orion": "01/12/2020", "Taurus": "16/05/2022", "Hercules": "10/07/2022"}
-language = {"English": "Perseus", "Spanish": "Perseo", "French" : "Persée"}
 
-for constellation, date in northConsUser.items():
-    savePath = os.getcwd() 
-    savePath = os.path.join(savePath + "\GaN\docs_changed\GaN{year}_ActivityGuide_{cons}".format(year = year, cons = constellation))        
-    os.mkdir(savePath)
-    for lang, letter in language.items():
-        #newWordPath = os.path.abspath("..\Gan\GaN\docs_changed\GaN_{year}_ActivityGuide_{cons}_/".format(year = year, cons = northConsUser))
-        newWordPath = os.path.join(savePath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constellation) + str(lang) + ".docx")
-        workingDoc.save(newWordPath)
+
+
+
+
