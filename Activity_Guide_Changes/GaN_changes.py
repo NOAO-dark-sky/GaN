@@ -11,6 +11,10 @@ from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
 
+# Start time counter
+start = time.perf_counter()
+
+
 # Define the path for the excel file
 excelPath = os.path.join(sys.path[0],"GaN_cons_and_dates.xlsx")
 
@@ -279,10 +283,7 @@ for constellation, date in newConstellationNorth.items():
         # Define the Word file path as the original file
         wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
         workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx") 
-        print("_____________________________________________________________\n")
-        print("Working on {language} language\n".format(language = languageBase))
-
-
+    
 
         #Define the base language in deep_translator and translate it into de destiny language
         for languageName in langDict:
@@ -299,9 +300,11 @@ for constellation, date in newConstellationNorth.items():
         #Save a copy with a new name, date and language.
         newWordPath = os.path.join(savePath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constellation) + str(languageBase) + ".docx")
         workingDoc.save(newWordPath)
-        print(newWordPath)
 
         #Print information about the working file on
-        print(languageBase + " activity guide is done.\n")
-        print("Done working on constellation {cons}\n".format(cons = constellation))
-        print("_____________________________________________________________\n")
+        print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constellation) + " has been completed")
+        print("____________________________________________________________________________________________\n")
+
+# Finishing start counter and getting time of execution
+finish = time.perf_counter()
+print(f'Finished in {round(finish-start, 2)}seconds')
