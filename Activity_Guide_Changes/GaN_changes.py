@@ -2,7 +2,8 @@
 # Install python-docx for managing the Word Files.
 # Install Pandas to manage the Excel file and bring the information
 # Import Shutil to remove the directory
-import mtranslate, googletrans, os, time, sys    
+import os, time, sys 
+from deep_translator import GoogleTranslator  
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.shared import Pt, Inches
@@ -13,9 +14,8 @@ from shutil import rmtree
 # Define the path for the excel file
 excelPath = os.path.join(sys.path[0],"GaN_cons_and_dates.xlsx")
 
-#initialize googletrans and bring the languages dictionary
-translator= googletrans.Translator()
-lang = googletrans.LANGUAGES
+#initialize deep_translator and bring the different languages
+langDict = GoogleTranslator().get_supported_languages()
 
 # Get Data from the Excel File using Pandas
 # Capitalize  constellations names for a later comparison
@@ -90,7 +90,7 @@ def openWordDoc(filename):
 ########################All the information that needs to change#######################
 #######################################################################################
 
-lang = googletrans.LANGUAGES
+
 #updating northern hemisphere information (constellation, date, text displayed to user)
 northConstellationReplacement = {
         
@@ -284,16 +284,17 @@ for constellation, date in newConstellationNorth.items():
 
 
 
-        #Define the code of the base language in googletrans and translate it into de destiny language
-        for codeLanguage, languageName in lang.items():
+        #Define the base language in deep_translator and translate it into de destiny language
+        for languageName in langDict:
             if languageBase.lower() == languageName:
-                textTranslate = translator.translate(newConstellationNorth.get(constellation), dest = codeLanguage)
+                constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constellation +" constellation")
+                dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(newConstellationNorth.get(constellation))
                 for languageSelected, date in northDateReplacement.items():
                     if languageSelected.lower() == languageName:
                         for paragraph in workingDoc.paragraphs:
                             if date in paragraph.text:
                                 paragraph.clear()
-                                paragraph.add_run(northHeadingFirst[languageBase]+ constellation +": " + textTranslate.text)
+                                paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated +" "+ str(year)+": " + dateTranslated)
 
         #Save a copy with a new name, date and language.
         newWordPath = os.path.join(savePath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constellation) + str(languageBase) + ".docx")
