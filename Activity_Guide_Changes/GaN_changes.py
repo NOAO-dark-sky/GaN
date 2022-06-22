@@ -1,4 +1,5 @@
-﻿# Install mtranslate, googletrans for translations
+﻿# -*- coding:utf-8 -*-
+# Install mtranslate, googletrans for translations
 # Install python-docx for managing the Word Files.
 # Install Pandas to manage the Excel file and bring the information
 # Import Shutil to remove the directory
@@ -11,7 +12,7 @@ from docx.shared import Pt, Inches
 from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
-import concurrent.futures
+import multiprocessing
 
 
 def importNorthData():
@@ -38,6 +39,22 @@ def importNorthData():
     #return the dictionary with the North Data
     return newConstellationNorth
 
+def createDir(year, constellations):
+    cons = constellations
+    year = year
+    savePath = os.getcwd() 
+    savePath = os.path.join(savePath + "\GaN\docs_changed")
+    rmtree(savePath)
+    os.mkdir(savePath)
+    paths = []
+    for con in cons:
+        savePath = os.getcwd() 
+        savePath = os.path.join(savePath + "\GaN\docs_changed\GaN_{year}_ActivityGuide_{con}".format(year = year, con = con))        
+        os.mkdir(savePath)
+        paths.append(savePath)
+    
+    return paths
+
 
 #opens document that will be edited
 def openWordDoc(filename):
@@ -54,7 +71,7 @@ def openWordDoc(filename):
 ########################All the information that needs to change#######################
 #######################################################################################
 
-def northTranslation(constellations):
+def northTranslation(dirPaths):
     #updating northern hemisphere information (constellation, date, text displayed to user)
     northConstellationReplacement = {
             
@@ -129,7 +146,7 @@ def northTranslation(constellations):
         "Thai" : "กำหนดการในปีพ. ศ. "
         }
 
-    North_heading_middle = {
+    NorthHeadingMiddle = {
         "Catalan" : " en què usem la constel·lació, ",
         "Chinese" : "： "  ,
         "Czech" : ". Při pozorování použijte hvězdy oblohy, které zobrazují souhvězdí ",
@@ -231,49 +248,41 @@ def northTranslation(constellations):
     ##################################################################################################
     ##################################################################################################
 
-    year = 2022
-    Thai_year = year + 543
-
-    #initialize deep_translator and bring the different languages
+        #initialize deep_translator and bring the different languages
     langDict = GoogleTranslator().get_supported_languages()
-    constellations = constellations
-
+    dirPaths = dirPaths
     northData = importNorthData()
 
-    for constellation in constellations:
+    for dirPath in dirPaths:
+        constName = dirPath.split('_')[-1]
+        year = dirPath.split('_')[-3]
+        #replace the translations in the proper places
+        for languageBase in northConstellationReplacement.keys():
 
-        for constellation, date in northData.items():
-            savePath = os.getcwd() 
-            savePath = os.path.join(savePath + "\GaN\docs_changed\GaN_{year}_ActivityGuide_{cons}".format(year = year, cons = constellation))        
-            os.mkdir(savePath)
+            # Define the Word file path as the original file
+            wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
+            workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx") 
+        
 
-            #replace the translations in the proper places
-            for languageBase, constName in northConstellationReplacement.items():
+            #Define the base language in deep_translator and translate it into de destiny language
+            for languageName in langDict:
+                if languageBase.lower() == languageName:
+                    constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
+                    dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
+                    for languageSelected, date in northDateReplacement.items():
+                        if languageSelected.lower() == languageName:
+                            for paragraph in workingDoc.paragraphs:
+                                if date in paragraph.text:
+                                    paragraph.clear()
+                                    paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated +" "+ str(year)+": " + dateTranslated)
 
-                # Define the Word file path as the original file
-                wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
-                workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx") 
-            
+            #Save a copy with a new name, date and language.
+            newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
+            workingDoc.save(newWordPath)
 
-                #Define the base language in deep_translator and translate it into de destiny language
-                for languageName in langDict:
-                    if languageBase.lower() == languageName:
-                        constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constellation +" constellation")
-                        dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constellation))
-                        for languageSelected, date in northDateReplacement.items():
-                            if languageSelected.lower() == languageName:
-                                for paragraph in workingDoc.paragraphs:
-                                    if date in paragraph.text:
-                                        paragraph.clear()
-                                        paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated +" "+ str(year)+": " + dateTranslated)
-
-                #Save a copy with a new name, date and language.
-                newWordPath = os.path.join(savePath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constellation) + str(languageBase) + ".docx")
-                workingDoc.save(newWordPath)
-
-                #Print information about the working file on
-                print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constellation) + " has been completed")
-                print("____________________________________________________________________________________________\n")
+            #Print information about the working file on
+            print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " has been completed")
+            print("____________________________________________________________________________________________\n")
 
                     
 
@@ -282,15 +291,19 @@ def northTranslation(constellations):
 if __name__ =='__main__':
 
     # Start time counter
-    start = time.perf_counter()
-
+    start = time.time()
+    year = 2022
     constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
     
+    dirPaths= createDir(year, constellations)
     #Calll de translation function
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        executor.map(northTranslation, constellations)
+    pool = multiprocessing.Pool(len(constellations))
+    pool.apply_async(northTranslation(dirPaths))
+
+    pool.close()
+    pool.join()
 
 
     # Finishing start counter and getting time of execution
-    finish = time.perf_counter()
-    print(f'Finished in {round(finish-start, 2)}seconds')
+    finish = time.time() - start
+    print('Execution time: ', time.strftime("%H:%M:%S", time.gmtime(finish)))
