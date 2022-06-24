@@ -127,26 +127,26 @@ def northTranslation(dirPaths):
         "Catalan" : "Dates de la campanya ",
         "Chinese" : ""  ,
         "Czech" : "Informace v této příručce jsou určeny pro pozorovací kampaň probíhající od ",
-        "English" : "Campaign Dates that use ",
-        "Finnish" : "havainnointijaksot vuonna ",
+        "English" : " ",
+        "Finnish" : "",
         "French" : "Dates à utiliser pour la Campagne ",
         "Galician" : "Datas da campaña de ",
         "German" : "Kampagnendaten ",
-        "Greek" : "Ημερομηνίες παρατήρησης για τον αστερισμό του ",
+        "Greek" : "",
         "Indonesian" : "Waktu Kampanye ",  
-        "Japanese" : "年キャンペーン期間 対象：",
-        "Polish" : ": Daty kampanii używające ",
+        "Japanese" : " ：",
+        "Polish" : "",
         "Portuguese" : "Datas das campanhas de ",
         "Romanian" : "Perioadele campaniei din ",
         "Serbian" : "Сазвежђе ",
         "Slovak" : "V roku ",
-        "Slovenian" :  "môžete pozorovať súhvezdie ",
-        "Spanish" :  "Fechas de la campaña para ",
+        "Slovenian" :  "",
+        "Spanish" :  "",
         "Swedish" : "Kampanjdatum för ",
         "Thai" : "กำหนดการในปีพ. ศ. "
         }
 
-    NorthHeadingMiddle = {
+    northHeadingMiddle = {
         "Catalan" : " en què usem la constel·lació, ",
         "Chinese" : "： "  ,
         "Czech" : ". Při pozorování použijte hvězdy oblohy, které zobrazují souhvězdí ",
@@ -169,7 +169,7 @@ def northTranslation(dirPaths):
         "Thai" : " เซอุส"
         }
 
-    North_heading_last = {
+    northHeadingLast = {
         "Catalan" : " ",
         "Chinese" : "年"  ,
         "Czech" : ".",
@@ -253,9 +253,17 @@ def northTranslation(dirPaths):
     dirPaths = dirPaths
     northData = importNorthData()
 
+    #1date2con3
+    CountryList1 = ("Czech")
+    #1con2year3date
+    CountryList2 = ("Chinese", "Finnish", "Serbian", "Swedish")
+    #1year2Con3date
+    CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
+
     for dirPath in dirPaths:
         constName = dirPath.split('_')[-1]
         year = dirPath.split('_')[-3]
+        thaiYear = int(year)+ 543
         #replace the translations in the proper places
         for languageBase in northConstellationReplacement.keys():
 
@@ -274,8 +282,15 @@ def northTranslation(dirPaths):
                             for paragraph in workingDoc.paragraphs:
                                 if date in paragraph.text:
                                     paragraph.clear()
-                                    paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated +" "+ str(year)+": " + dateTranslated)
-
+                                    if languageBase in CountryList1:
+                                        paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
+                                    elif languageBase in CountryList2:
+                                        paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
+                                    elif languageBase in CountryList3:
+                                        if languageBase != "Thai":      
+                                            paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                        else:
+                                            paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
             #Save a copy with a new name, date and language.
             newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
             workingDoc.save(newWordPath)
