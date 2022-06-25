@@ -192,36 +192,36 @@ def northTranslation(dirPaths):
         "Thai" : "ดำเนินโครงการให้เสร็จสมบูรณ์: "
         }
 
-    First_Paragraph_first = {
-        "Chilean_Spanish" : "Usted está participando en una campaña mundial para observar y registrar las estrellas visibles más débiles como un medio para medir la contaminación lumínica en un lugar determinado. Localizando y observando la constelación ",
-        "Catalan" : "Esteu participant en una campanya mundial per observar i anotar la brillantor de les estrelles més febles que es poden veure, com a mitjà per mesurar la contaminació lumínica en un lloc determinat. Localitzant i observant la constel·lació ",
+    firstParagraphfirst = {
+        "Chilean_Spanish" : "Usted está participando en una campaña mundial para observar y registrar las estrellas visibles más débiles como un medio para medir la contaminación lumínica en un lugar determinado. Localizando y observando la ",
+        "Catalan" : "Esteu participant en una campanya mundial per observar i anotar la brillantor de les estrelles més febles que es poden veure, com a mitjà per mesurar la contaminació lumínica en un lloc determinat. Localitzant i observant la  ",
         "Chinese" : "你现在参加的是全球公益科普活动 Globe at Night （全球观星活动），这是一个以观察和记录夜空的可见恒星数来测量你所在地光污染情况的活动。通过定位和观测夜空中的",
-        "Czech" : "Celosvětový projekt „Globe at Night“ nabízí možnost zapojit se do jednoduchého pozorování, které pomáhá mapovat světelné znečištění po celém světě. Stačí se kdykoli v níže uvedených intervalech v roce 2018 podívat na souhvězdí Bootes, Lva, Cygnus, Labutě, Pegase nebo Persea a s pomocí přiložených map hvězdného nebe určit, jak slabé hvězdy jste schopni na obloze pozorovat.", ####Figure out what to do with the Czech one
+        "Czech" : "Účastníte se celosvětové kampaně zaměřené na pozorování a záznam nejslabších viditelných hvězd jako prostředku měření světelného znečištění v daném místě. Lokalizací a pozorováním", ####Figure out what to do with the Czech one
         "English" : "You are participating in a global campaign to observe and record the faintest stars visible as a means of measuring light pollution in a given location. By locating and observing the constellation ",
-        "Finnish" : "Osallistut maailmanlaajuiseen tapahtumaan jossa havaitaan ja kirjataan himmeimmät nähtävissä olevat tähdet valosaasteen mittaamiseksi. Havaitsijat eri puolilla maailmaa etsivät ja havaitsevat Härkä tähtikuvion ja vertaavat sitä tähtikarttaan. Näin havaitaan, ",
-        "French" :   "Vous allez participer à une campagne mondiale d’observation pour détecter les plus faibles étoiles visibles afin de mesurer la pollution lumineuse sur un site donné. Partout dans le monde, en localisant et en observant la constellation ",
-        "Galician" : "Grazas por participar nesta campaña global de medida da contaminación lumínica mediante a observación das estrelas máis febles que podes albiscar. Localizando e observando a constelación de ",
-        "German" : "Mach mit an einer weltweiten Kampagne, die schwächsten sichtbaren Sterne zu beobachten und aufzuzeichnen, um die Lichtverschmutzung an einem Ort zu messen. Durch das Auffinden und Beobachten des Sternbildes ",
-        "Greek" : "Συμμετέχετε σε μία παγκόσμια καμπάνια για να παρατηρήσετε και να καταγράψετε τη φωτεινότητα των πιο αμυδρά ορατών άστρων σαν μέσο για την μέτρηση της Φωτορρύπανσης σε μία δεδομένη περιοχή. Με τον εντοπισμό και την παρατήρηση του αστερισμού του ",
-        "Indonesian" : "Anda sedang berpartisipasi dalam kampanye global pengamatan dan pencatatan penampakan bintang paling redup untuk pengukuran tingkat polusi cahaya di suatu lokasi. Melalui pengamatan dan identifikasi Rasi ",
+        "Finnish" : "Osallistut maailmanlaajuiseen kampanjaan tarkkaillaksesi ja tallentaaksesi himmeimpiä näkyvissä olevia tähtiä keinona mitata valonsaastetta tietyssä paikassa. Paikallistamalla ja tarkkailemalla ",
+        "French" :   "Vous allez participer à une campagne mondiale d’observation pour détecter les plus faibles étoiles visibles afin de mesurer la pollution lumineuse sur un site donné. Partout dans le monde, en localisant et en observant la ",
+        "Galician" : "Grazas por participar nesta campaña global de medida da contaminación lumínica mediante a observación das estrelas máis febles que podes albiscar. Localizando e observando a  ",
+        "German" : "Mach mit an einer weltweiten Kampagne, die schwächsten sichtbaren Sterne zu beobachten und aufzuzeichnen, um die Lichtverschmutzung an einem Ort zu messen. Durch das Auffinden und Beobachten des ",
+        "Greek" : "Συμμετέχετε σε μία παγκόσμια καμπάνια για να παρατηρήσετε και να καταγράψετε τη φωτεινότητα των πιο αμυδρά ορατών άστρων σαν μέσο για την μέτρηση της Φωτορρύπανσης σε μία δεδομένη περιοχή. Με τον εντοπισμό και την παρατήρηση του  ",
+        "Indonesian" : "Anda sedang berpartisipasi dalam kampanye global pengamatan dan pencatatan penampakan bintang paling redup untuk pengukuran tingkat polusi cahaya di suatu lokasi. Melalui pengamatan dan identifikasi  ",
         "Japanese" : '街には人工光があふれ、夜空が照らされ、星が見えにくくなってきています。また、無駄・過剰な人工光は、莫大なエネルギーの浪費、生態系への悪影響、人間生活・人体への悪影響をも引き起こしています。この光害（ひかりがい）の問題を啓発する活動に、あなたも参加してみませんか。Globe at Night（グローブ・アット・ナイト）は市民参加型の、夜空の明るさ世界同時観察キャンペーンです。どなたでも簡単に参加できます。決められた日時に屋外に出て夜空を眺め、星の見え方をインターネットで報告するだけ。ぜひあなたも参加して、光害の問題を考えてみませんか。そして、世界中の人と、美しい星空・地球環境への思いを共有しましょう。',
-        "Polish" : "Uczestniczysz w ogólnoświatowym przedsięwzięciu, którego celem jest obserwacja i odnotowanie najsłabszych widocznych gwiazd w celu zmierzenia zanieczyszczenia światłem w danym miejscu. Poprzez zlokalizowanie i obserwację gwiazdozbioru ",
-        "Portuguese" : "Está a participar numa campanha global para observar e registar as estrelas mais fracas visíveis como forma de medir a poluição luminosa num determinado local. Localizando e observando a constelação de ",
-        "Romanian" : "Prin această activitate participați în cadrul unei campanii globale de observare și consemnare a celor mai slabe stele vizibile ca metodă de măsurare a poluării luminoase dintr-un anumit loc. Localizând și observând constelația ",
-        "Serbian" : "Ви сте учесници глобалног посматрачког пројекта, који има за циљ да одреди колико је светлосно загађене у средини у којој живите. Посматрајући звезде унутар сазвежђа ",
-        "Slovak" : "Stávate sa súčasťou celosvetovej kampane Globe at Night, ktorej cieľom je meranie svetelného znečistenia. Pozorovaním súhvezdia ",
-        "Slovenian" : "Sodelujete v svetovni aktivnosti opazovanja in beleženja najšibkejših, s prostim očesom  še vidnih zvezd, kot metode za merjenje svetlobnega onesnaževanja na določenem mestu. Z opazovanjem izbranega ozvezdja ",
-        "Spanish" : "Usted está participando en una campaña mundial para observar y registrar las estrellas visibles más débiles como un medio para medir la contaminación lumínica en un lugar determinado. Localizando y observando la constelación ",
-        "Swedish" : "Du deltar i en världsomspännande kampanj för att observera och rapportera de svagaste synliga stjärnorna, som ett mått på ljusföroreningarna på orten. Genom att hitta och observera stjärnbilden (",
+        "Polish" : "Uczestniczysz w ogólnoświatowym przedsięwzięciu, którego celem jest obserwacja i odnotowanie najsłabszych widocznych gwiazd w celu zmierzenia zanieczyszczenia światłem w danym miejscu. Poprzez zlokalizowanie i obserwację  ",
+        "Portuguese" : "Está a participar numa campanha global para observar e registar as estrelas mais fracas visíveis como forma de medir a poluição luminosa num determinado local. Localizando e observando a  ",
+        "Romanian" : "Prin această activitate participați în cadrul unei campanii globale de observare și consemnare a celor mai slabe stele vizibile ca metodă de măsurare a poluării luminoase dintr-un anumit loc. Localizând și observând  ",
+        "Serbian" : "Ви сте учесници глобалног посматрачког пројекта, који има за циљ да одреди колико је светлосно загађене у средини у којој живите. Посматрајући звезде унутар  ",
+        "Slovak" : "Stávate sa súčasťou celosvetovej kampane Globe at Night, ktorej cieľom je meranie svetelného znečistenia. Pozorovaním  ",
+        "Slovenian" : "Sodelujete v svetovni aktivnosti opazovanja in beleženja najšibkejših, s prostim očesom  še vidnih zvezd, kot metode za merjenje svetlobnega onesnaževanja na določenem mestu. Z opazovanjem izbranega ",
+        "Spanish" : "Usted está participando en una campaña mundial para observar y registrar las estrellas visibles más débiles como un medio para medir la contaminación lumínica en un lugar determinado. Localizando y observando la  ",
+        "Swedish" : "Du deltar i en världsomspännande kampanj för att observera och rapportera de svagaste synliga stjärnorna, som ett mått på ljusföroreningarna på orten. Genom att hitta och observera ",
         "Thai" : "คุณกำลังร่วมนโครงการระดับโลกที่จะสังเกตและบันทึกผลดาวฤกษ์ที่จางที่สุดที่มองเห็นได้ ซึ่งก็คือการวัดมลพิษทางแสงในสถานที่นั้นๆ  โดยการมองหาและสังเกต "
 
     }
 
-    First_Paragraph_last = {
-        "Chilean_Spanish" : " el cielo nocturno y comparándolo con las cartas estelares, la gente de todo el mundo aprenderá cómo las luces de su comunidad contribuyen a la contaminación lumínica. Sus contribuciones a la base de datos en línea documentarán el cielo nocturno visible.",
+    firstParagraphLast = {
+        "Chilean_Spanish" : " en el cielo nocturno y comparándolo con las cartas estelares, la gente de todo el mundo aprenderá cómo las luces de su comunidad contribuyen a la contaminación lumínica. Sus contribuciones a la base de datos en línea documentarán el cielo nocturno visible.",
         "Catalan" : " a la nit i comparant la brillantor de les estrelles del cel amb la brillantor que indiquen els mapes, gent de tot el món aprendran com els llums de la seva zona contribueixen a augmentar la contaminació lumínica. Les vostres aportacions a la base de dades activa faran palesa la visibilitat del cel nocturn.",
         "Chinese" : "，并将所肉眼观察到的星等情况与所给出的星等图表作对比，我们可以知道自己社区中的人造光是如何导致光污染的。你所提供数据将和来自全世界的数据一起帮助建立一张全球光污染地图。",
-        "Czech" : "Celosvětový projekt „Globe at Night“ nabízí možnost zapojit se do jednoduchého pozorování, které pomáhá mapovat světelné znečištění po celém světě. Stačí se kdykoli v níže uvedených intervalech v roce 2018 podívat na souhvězdí Bootes, Lva, Cygnus, Labutě, Pegase nebo Persea a s pomocí přiložených map hvězdného nebe určit, jak slabé hvězdy jste schopni na obloze pozorovat.", ###Figure something out with the Czech
+        "Czech" : "na noční obloze a jejím porovnáním s hvězdnými mapami se lidé z celého světa dozvědí, jak světla v jejich komunitě přispívají ke světelnému znečištění. Vaše příspěvky do online databáze budou dokumentovat viditelnou noční oblohu.", ###Figure something out with the Czech
         "English" : " in the night sky and comparing it to stellar charts, people from around the world will learn how the lights in their community contribute to light pollution. Your contributions to the online database will document the visible nighttime sky.",
         "Finnish" : " miten valosaaste syntyy kunkin taajaman tai muun ihmisen toiminnan valoista. Antamasi tiedot päivittyvät heti verkossa olevaan tietokantaan, ja näin saadaan käsitys siitä minkä verran taivaan tähdistä on missäkin nähtävissä.",
         "French" :   " dans le ciel nocturne et en la comparant aux cartes stellaires, les participants, apprendront comment l’éclairage, dans leur environnement local, influence la pollution lumineuse. Vos contributions à la base de données en ligne permettront de mesurer la qualité du ciel nocturne.",
@@ -236,8 +236,8 @@ def northTranslation(dirPaths):
         "Serbian" : " и упоређујући их са приложеним звезданим картама, посматрачи широм света могу на практичном примеру да увиде колико је светлосно загађење у њиховој средини. Кроз учешће у овом пројекту, допринећете целовитијем сагледавању глобалног проблема.",
         "Slovak" : " na nočnej oblohe a porovnávaním skutočnej situácie s našimi mapkami sa nielenže dozviete, ako osvetlenie vo Vašom okolí prispieva k svetelnému znečisteniu, ale budete môcť porovnať úroveň svetelného znečistenia aj s inými lokalitami z celého sveta. Vaše pozorovanie tiež rozšíri online databázu dokumentujúcu viditeľnosť nočnej oblohy na našej planéte",
         "Slovenian" : " na nočnem nebu in s primerjavo videnega z zvezdnimi kartami, se lahko ljudje širom sveta podučijo o tem, kako svetila v njihovem kraju prispevajo k svetlobnemu onesnaževanju.  Vaši prispevki v spletno bazo podatkov bodo pomagali dokumentirati nočno nebo, vidno s prostim očesom.",
-        "Spanish" : " el cielo nocturno y comparándolo con las cartas estelares, la gente de todo el mundo aprenderán cómo las luces de su comunidad contribuyen a la contaminación lumínica. Sus contribuciones a la base de datos en línea documentarán el cielo nocturno visible.",
-        "Swedish" : ") på natthimlen kan folk i hela världen lära sig hur belysningen i våra samhällen och omgivningar bidrar till ljusföroreningar. Era bidrag till online-databasen hjälper till att dokumentera den synliga natthimlens över hela världen.",
+        "Spanish" : " en el cielo nocturno y comparándolo con las cartas estelares, la gente de todo el mundo aprenderán cómo las luces de su comunidad contribuyen a la contaminación lumínica. Sus contribuciones a la base de datos en línea documentarán el cielo nocturno visible.",
+        "Swedish" : " på natthimlen kan folk i hela världen lära sig hur belysningen i våra samhällen och omgivningar bidrar till ljusföroreningar. Era bidrag till online-databasen hjälper till att dokumentera den synliga natthimlens över hela världen.",
         "Thai" : "ในท้องฟ้ายามค่ำคืนและเปรียบเทียบสิ่งที่เห็นกับแผนภาพที่เราให้า คนจากทั่วทุกมุมโลกจะได้เรียนรู้ว่าแสงไฟในชุมชนของพวกเขาสร้างมลพิษทางแสงอย่างไร ผลงานของคุณจะอยู่ในถูกเก็บในฐานข้อมูลออนไลน์ ซึ่งจะเป็นเอกสารเกี่ยวกับท้องฟ้ายามค่ำคืนที่เรามองเห็น",
 
     }
@@ -280,17 +280,26 @@ def northTranslation(dirPaths):
                     for languageSelected, date in northDateReplacement.items():
                         if languageSelected.lower() == languageName:
                             for paragraph in workingDoc.paragraphs:
-                                if date in paragraph.text:
-                                    paragraph.clear()
-                                    if languageBase in CountryList1:
-                                        paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
-                                    elif languageBase in CountryList2:
-                                        paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
-                                    elif languageBase in CountryList3:
-                                        if languageBase != "Thai":      
-                                            paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                if northConstellationReplacement[languageBase] in paragraph.text:
+                                    if date in paragraph.text:
+                                        paragraph.clear()
+                                        if languageBase in CountryList1:
+                                            paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
+                                        elif languageBase in CountryList2:
+                                            paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
+                                        elif languageBase in CountryList3:
+                                            if languageBase != "Thai":      
+                                                paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                            else:
+                                                paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                    else:
+                                        paragraph.clear()
+                                        if(languageBase!= 'Japanese'):
+                                            paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase])
                                         else:
-                                            paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                            paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated)
+
+
             #Save a copy with a new name, date and language.
             newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
             workingDoc.save(newWordPath)
