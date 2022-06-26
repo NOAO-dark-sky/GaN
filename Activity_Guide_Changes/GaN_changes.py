@@ -337,12 +337,11 @@ if __name__ =='__main__':
     paths = createPaths(directories, languages)
     
     #Calll de translation function
-    # pool = multiprocessing.Pool(processes = 4)
+    pool = multiprocessing.Pool(processes = 6)
     for path in paths:
-        #pool.apply_async(northTranslation(dirPath))
-        northTranslation(path)
-    #pool.close()
-    #pool.join()
+        pool.apply_async(northTranslation, args = (path, ))
+    pool.close()
+    pool.join()
 
 
     # Finishing start counter and getting time of execution
