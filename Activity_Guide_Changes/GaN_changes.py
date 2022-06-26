@@ -55,6 +55,19 @@ def createDir(year, constellations):
     
     return paths
 
+def createPaths(directories, languages):
+    direcs = directories
+    langs = languages
+
+    dirPaths = []
+    for lang in langs:
+        for direc in direcs:
+            dirPaths.append(direc + "_" + lang)
+    return dirPaths
+
+
+
+
 
 #opens document that will be edited
 def openWordDoc(filename):
@@ -147,22 +160,22 @@ def northTranslation(dirPaths):
         }
 
     northHeadingMiddle = {
-        "Catalan" : " en què usem la constel·lació, ",
+        "Catalan" : " en què usem la  ",
         "Chinese" : "： "  ,
-        "Czech" : ". Při pozorování použijte hvězdy oblohy, které zobrazují souhvězdí ",
+        "Czech" : ". Při pozorování použijte hvězdy oblohy, které zobrazují",
         "English" : " Campaign Dates that use ",
         "Finnish" : " havainnointijaksot vuonna ",
         "French" : " ",
         "Galician" : " que usan ",
-        "German" : " für das Sternbild ",
-        "Greek" : " Ημερομηνίες παρατήρησης για τον αστερισμό του ",
+        "German" : " für das ",
+        "Greek" : " Ημερομηνίες παρατήρησης για τον  ",
         "Indonesian" : " untuk ",  
         "Japanese" : "年キャンペーン期間 (対象：",
         "Polish" : ": Daty kampanii używające ",
         "Portuguese" : " que usam ",
         "Romanian" : " pentru ",
         "Serbian" : " током ",
-        "Slovak" : " môžete pozorovať súhvezdie ",
+        "Slovak" : " môžete pozorovať ",
         "Slovenian" :  ": Datumi kampanje za opazovanje ",
         "Spanish" :  " Fechas de la campaña para ",
         "Swedish" : " ",
@@ -248,9 +261,8 @@ def northTranslation(dirPaths):
     ##################################################################################################
     ##################################################################################################
 
-        #initialize deep_translator and bring the different languages
-    langDict = GoogleTranslator().get_supported_languages()
-    dirPaths = dirPaths
+    #import data and bring the created Paths
+    dirPath = dirPaths
     northData = importNorthData()
 
     #1date2con3
@@ -260,53 +272,54 @@ def northTranslation(dirPaths):
     #1year2Con3date
     CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
 
-    for dirPath in dirPaths:
-        constName = dirPath.split('_')[-1]
-        year = dirPath.split('_')[-3]
-        thaiYear = int(year)+ 543
-        #replace the translations in the proper places
-        for languageBase in northConstellationReplacement.keys():
+    languageBase = dirPath.split('_')[-1]
+    constName = dirPath.split('_')[-2]
+    year = dirPath.split('_')[-4]
+    thaiYear = int(year)+ 543
+    #replace the translations in the proper places
+    # Define the Word file path as the original file
+    wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
+    workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx")
 
-            # Define the Word file path as the original file
-            wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
-            workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx") 
-        
+    if languageBase != "Chinese":
+        languageBase = languageBase
+    else:
+        languageBase = "chinese (traditional)"
 
-            #Define the base language in deep_translator and translate it into de destiny language
-            for languageName in langDict:
-                if languageBase.lower() == languageName:
-                    constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
-                    dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
-                    for languageSelected, date in northDateReplacement.items():
-                        if languageSelected.lower() == languageName:
-                            for paragraph in workingDoc.paragraphs:
-                                if northConstellationReplacement[languageBase] in paragraph.text:
-                                    if date in paragraph.text:
-                                        paragraph.clear()
-                                        if languageBase in CountryList1:
-                                            paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
-                                        elif languageBase in CountryList2:
-                                            paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
-                                        elif languageBase in CountryList3:
-                                            if languageBase != "Thai":      
-                                                paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
-                                            else:
-                                                paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
-                                    else:
-                                        paragraph.clear()
-                                        if(languageBase!= 'Japanese'):
-                                            paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase])
-                                        else:
-                                            paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated)
+    #Define the base language in deep_translator and translate it into de destiny language
+    constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
+    dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
+
+    for languageSelected, date in northDateReplacement.items():
+        if languageSelected == languageBase:
+            for paragraph in workingDoc.paragraphs:
+                if northConstellationReplacement[languageBase] in paragraph.text:
+                    if date in paragraph.text:
+                        paragraph.clear()
+                        if languageBase in CountryList1:
+                            paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
+                        elif languageBase in CountryList2:
+                            paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
+                        elif languageBase in CountryList3:
+                            if languageBase != "Thai":      
+                                paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                            else:
+                                paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                    else:
+                        paragraph.clear()
+                        if(languageBase!= 'Japanese'):
+                            paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase])
+                        else:
+                            paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated)
 
 
-            #Save a copy with a new name, date and language.
-            newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
-            workingDoc.save(newWordPath)
+    #Save a copy with a new name, date and language.
+    dirPath = dirPath.rsplit('_', 1)[0]
+    newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
+    workingDoc.save(newWordPath)
 
-            #Print information about the working file on
-            print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " has been completed")
-            print("____________________________________________________________________________________________\n")
+    #Print information about the working file on
+    return print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " has been completed \n____________________________________________________________________________________________\n")
 
                     
 
@@ -318,14 +331,18 @@ if __name__ =='__main__':
     start = time.time()
     year = 2022
     constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
+    languages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
     
-    dirPaths= createDir(year, constellations)
+    directories= createDir(year, constellations)
+    paths = createPaths(directories, languages)
+    
     #Calll de translation function
-    pool = multiprocessing.Pool(len(constellations))
-    pool.apply_async(northTranslation(dirPaths))
-
-    pool.close()
-    pool.join()
+    # pool = multiprocessing.Pool(processes = 4)
+    for path in paths:
+        #pool.apply_async(northTranslation(dirPath))
+        northTranslation(path)
+    #pool.close()
+    #pool.join()
 
 
     # Finishing start counter and getting time of execution
