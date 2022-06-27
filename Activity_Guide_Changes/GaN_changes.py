@@ -261,9 +261,10 @@ def northTranslation(dirPaths):
     ##################################################################################################
     ##################################################################################################
 
-    #import data and bring the created Paths
+    # Get data from the Excel file and bring the created Paths
     dirPath = dirPaths
     northData = importNorthData()
+
 
     #1date2con3
     CountryList1 = ("Czech")
@@ -272,15 +273,21 @@ def northTranslation(dirPaths):
     #1year2Con3date
     CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
 
+    # Getting data from the Paths
     languageBase = dirPath.split('_')[-1]
     constName = dirPath.split('_')[-2]
     year = dirPath.split('_')[-4]
     thaiYear = int(year)+ 543
-    #replace the translations in the proper places
+
+    #Be sure to change the websites into the word files
+    website1 = "astro/maps/GaNight/2018/"
+    website2 = "astro/maps/GaNight/2019/"
+    
     # Define the Word file path as the original file
     wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
     workingDoc = openWordDoc(wordPath + str(languageBase) + ".docx")
 
+    # Chinese in not in the dictionary of deep_translator, is better "chinese (traditional)"
     if languageBase != "Chinese":
         languageBase = languageBase
     else:
@@ -290,10 +297,13 @@ def northTranslation(dirPaths):
     constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
     dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
 
+    # Replace the translations in the proper places
     for languageSelected, date in northDateReplacement.items():
         if languageSelected == languageBase:
             for paragraph in workingDoc.paragraphs:
+                #If the contellation's name is in the paragraph, delete the paragraph and add a new one with the translations
                 if northConstellationReplacement[languageBase] in paragraph.text:
+                    # Replace only if the name and the date is on the paragraph, organizng with the grammar of each language
                     if date in paragraph.text:
                         paragraph.clear()
                         if languageBase in CountryList1:
@@ -305,13 +315,23 @@ def northTranslation(dirPaths):
                                 paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
                             else:
                                 paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                    # Replace only if the constellation's name is in the paragraph
                     else:
                         paragraph.clear()
                         if(languageBase!= 'Japanese'):
                             paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase])
                         else:
                             paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated)
-
+                
+                if website1 in paragraph.text:
+                    newLink = paragraph.text.replace("2018",str(year))
+                    paragraph.text = None
+                    paragraph.add_run(newLink)
+                
+                elif website2 in paragraph.text:
+                    newLink = paragraph.text.replace("2019",str(year))
+                    paragraph.text = None
+                    paragraph.add_run(newLink)
 
     #Save a copy with a new name, date and language.
     dirPath = dirPath.rsplit('_', 1)[0]
@@ -321,29 +341,30 @@ def northTranslation(dirPaths):
     #Print information about the working file on
     return print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " has been completed \n____________________________________________________________________________________________\n")
 
-                    
-
 
 
 if __name__ =='__main__':
 
     # Start time counter
     start = time.time()
+
+    # Get the data from the User
     year = 2022
     constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
     languages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
     
+    # Creating the directories and the Paths
     directories= createDir(year, constellations)
     paths = createPaths(directories, languages)
     
-    #Calll de translation function
-    pool = multiprocessing.Pool(processes = 6)
+    #Calll de translation function, requiring multiprocessing with Pool
+    pool = multiprocessing.Pool(processes = 4)
     for path in paths:
         pool.apply_async(northTranslation, args = (path, ))
     pool.close()
     pool.join()
 
 
-    # Finishing start counter and getting time of execution
+    # Finishing time counter and getting time of execution
     finish = time.time() - start
     print('Execution time: ', time.strftime("%H:%M:%S", time.gmtime(finish)))
