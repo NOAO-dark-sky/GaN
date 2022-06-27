@@ -89,7 +89,7 @@ def northTranslation(dirPaths):
     northConstellationReplacement = {
             
             "Catalan" : "Perseus",
-            "Chinese" : "英仙座",
+            "chinese (traditional)" : "英仙座",
             "Czech" : "Persea",
             "English" : "Perseus",
             "Finnish" : "Perseus" ,
@@ -114,7 +114,7 @@ def northTranslation(dirPaths):
     northDateReplacement = {
             
             "Catalan" : "30 d'octubre al novembre 8 i 29 de novembre de desembre 8",
-            "Chinese" : "10月30日至11月 8月和11月29日至12月8",
+            "chinese (traditional)" : "10月30日至11月 8月和11月29日至12月8",
             "Czech" : "30. října - 8. listopadu a 29. listopadu - 8. prosince",
             "English" : "Oct. 30-Nov. 8 and Nov. 29-Dec. 8",
             "Finnish" : "30 lokakuu- 8 marraskuu Ja 29 marraskuu-8 joulukuu" ,
@@ -138,7 +138,7 @@ def northTranslation(dirPaths):
 
     northHeadingFirst = {
         "Catalan" : "Dates de la campanya ",
-        "Chinese" : ""  ,
+        "chinese (traditional)": ""  ,
         "Czech" : "Informace v této příručce jsou určeny pro pozorovací kampaň probíhající od ",
         "English" : " ",
         "Finnish" : "",
@@ -161,7 +161,7 @@ def northTranslation(dirPaths):
 
     northHeadingMiddle = {
         "Catalan" : " en què usem la  ",
-        "Chinese" : "： "  ,
+        "chinese (traditional)" : "： "  ,
         "Czech" : ". Při pozorování použijte hvězdy oblohy, které zobrazují",
         "English" : " Campaign Dates that use ",
         "Finnish" : " havainnointijaksot vuonna ",
@@ -184,7 +184,7 @@ def northTranslation(dirPaths):
 
     northHeadingLast = {
         "Catalan" : " ",
-        "Chinese" : "年"  ,
+        "chinese (traditional)" : "年"  ,
         "Czech" : ".",
         "English" : ": ",
         "Finnish" : ": ",
@@ -208,7 +208,7 @@ def northTranslation(dirPaths):
     firstParagraphfirst = {
         "Chilean_Spanish" : "Usted está participando en una campaña mundial para observar y registrar las estrellas visibles más débiles como un medio para medir la contaminación lumínica en un lugar determinado. Localizando y observando la ",
         "Catalan" : "Esteu participant en una campanya mundial per observar i anotar la brillantor de les estrelles més febles que es poden veure, com a mitjà per mesurar la contaminació lumínica en un lloc determinat. Localitzant i observant la  ",
-        "Chinese" : "你现在参加的是全球公益科普活动 Globe at Night （全球观星活动），这是一个以观察和记录夜空的可见恒星数来测量你所在地光污染情况的活动。通过定位和观测夜空中的",
+        "chinese (traditional)" : "你现在参加的是全球公益科普活动 Globe at Night （全球观星活动），这是一个以观察和记录夜空的可见恒星数来测量你所在地光污染情况的活动。通过定位和观测夜空中的",
         "Czech" : "Účastníte se celosvětové kampaně zaměřené na pozorování a záznam nejslabších viditelných hvězd jako prostředku měření světelného znečištění v daném místě. Lokalizací a pozorováním", ####Figure out what to do with the Czech one
         "English" : "You are participating in a global campaign to observe and record the faintest stars visible as a means of measuring light pollution in a given location. By locating and observing the constellation ",
         "Finnish" : "Osallistut maailmanlaajuiseen kampanjaan tarkkaillaksesi ja tallentaaksesi himmeimpiä näkyvissä olevia tähtiä keinona mitata valonsaastetta tietyssä paikassa. Paikallistamalla ja tarkkailemalla ",
@@ -233,7 +233,7 @@ def northTranslation(dirPaths):
     firstParagraphLast = {
         "Chilean_Spanish" : " en el cielo nocturno y comparándolo con las cartas estelares, la gente de todo el mundo aprenderá cómo las luces de su comunidad contribuyen a la contaminación lumínica. Sus contribuciones a la base de datos en línea documentarán el cielo nocturno visible.",
         "Catalan" : " a la nit i comparant la brillantor de les estrelles del cel amb la brillantor que indiquen els mapes, gent de tot el món aprendran com els llums de la seva zona contribueixen a augmentar la contaminació lumínica. Les vostres aportacions a la base de dades activa faran palesa la visibilitat del cel nocturn.",
-        "Chinese" : "，并将所肉眼观察到的星等情况与所给出的星等图表作对比，我们可以知道自己社区中的人造光是如何导致光污染的。你所提供数据将和来自全世界的数据一起帮助建立一张全球光污染地图。",
+        "chinese (traditional)" : "，并将所肉眼观察到的星等情况与所给出的星等图表作对比，我们可以知道自己社区中的人造光是如何导致光污染的。你所提供数据将和来自全世界的数据一起帮助建立一张全球光污染地图。",
         "Czech" : "na noční obloze a jejím porovnáním s hvězdnými mapami se lidé z celého světa dozvědí, jak světla v jejich komunitě přispívají ke světelnému znečištění. Vaše příspěvky do online databáze budou dokumentovat viditelnou noční oblohu.", ###Figure something out with the Czech
         "English" : " in the night sky and comparing it to stellar charts, people from around the world will learn how the lights in their community contribute to light pollution. Your contributions to the online database will document the visible nighttime sky.",
         "Finnish" : " miten valosaaste syntyy kunkin taajaman tai muun ihmisen toiminnan valoista. Antamasi tiedot päivittyvät heti verkossa olevaan tietokantaan, ja näin saadaan käsitys siitä minkä verran taivaan tähdistä on missäkin nähtävissä.",
@@ -320,7 +320,6 @@ def northTranslation(dirPaths):
     #Define the base language in deep_translator and translate it into de destiny language
     constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
     dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
-    print(languageBase.lower())
 
     # Replace the translations in the proper places
     for languageSelected, date in northDateReplacement.items():
@@ -376,7 +375,7 @@ if __name__ =='__main__':
     # Get the data from the User
     year = 2022
     constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    languages = ["Catalan", "Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
+    languages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
     
     # Creating the directories and the Paths
     directories= createDir(year, constellations)
