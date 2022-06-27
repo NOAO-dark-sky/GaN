@@ -8,7 +8,7 @@ import os, time, sys
 from deep_translator import GoogleTranslator  
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
-from docx.shared import Pt, Inches
+from docx.shared import Pt
 from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
@@ -39,7 +39,7 @@ def importNorthData():
     #return the dictionary with the North Data
     return newConstellationNorth
 
-def createDir(year, constellations):
+def createNorthDir(year, constellations):
     cons = constellations
     year = year
     savePath = os.getcwd() 
@@ -49,13 +49,13 @@ def createDir(year, constellations):
     paths = []
     for con in cons:
         savePath = os.getcwd() 
-        savePath = os.path.join(savePath + "\GaN\docs_changed\GaN_{year}_ActivityGuide_{con}".format(year = year, con = con))        
+        savePath = os.path.join(savePath + "\GaN\docs_changed\GaN_North_{year}_ActivityGuide_{con}".format(year = year, con = con))        
         os.mkdir(savePath)
         paths.append(savePath)
     
     return paths
 
-def createPaths(directories, languages):
+def createNorthPaths(directories, languages):
     direcs = directories
     langs = languages
 
@@ -372,21 +372,23 @@ if __name__ =='__main__':
     # Start time counter
     start = time.time()
 
-    # Get the data from the User
-    year = 2022
-    constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    languages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
+    # Get the data from the User for north constellations
+    northYear = 2022
+    northConstellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
+    northLanguages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
     
     # Creating the directories and the Paths
-    directories= createDir(year, constellations)
-    paths = createPaths(directories, languages)
+    northDirectories= createNorthDir(northYear, northConstellations)
+    northPaths = createNorthPaths(northDirectories, northLanguages)
     
     #Calll de translation function, requiring multiprocessing with Pool
     pool = multiprocessing.Pool(processes = 4)
-    for path in paths:
+    for path in northPaths:
         pool.apply_async(northTranslation, args = (path, ))
     pool.close()
     pool.join()
+
+    
 
 
     # Finishing time counter and getting time of execution
