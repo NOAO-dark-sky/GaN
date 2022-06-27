@@ -269,7 +269,7 @@ def northTranslation(dirPaths):
     #1date2con3
     CountryList1 = ("Czech")
     #1con2year3date
-    CountryList2 = ("Chinese", "Finnish", "Serbian", "Swedish")
+    CountryList2 = ("chinese (traditional)", "Finnish", "Serbian", "Swedish")
     #1year2Con3date
     CountryList3 = ("Chilean_Spanish", "Catalan", "English", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Slovak", "Slovenian", "Spanish", "Thai")  #1year2Con3date
 
@@ -282,6 +282,7 @@ def northTranslation(dirPaths):
     #Be sure to change the websites into the word files
     website1 = "astro/maps/GaNight/2018/"
     website2 = "astro/maps/GaNight/2019/"
+
     
     # Define the Word file path as the original file
     wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
@@ -293,9 +294,33 @@ def northTranslation(dirPaths):
     else:
         languageBase = "chinese (traditional)"
 
+    # styles of each paragraph to kkep the original word styles
+    objStyles = workingDoc.styles
+    objCharstyle = objStyles.add_style('GaNStyle', WD_STYLE_TYPE.CHARACTER)
+    objFont = objCharstyle.font
+    objFont.name = 'Calibri'
+    objFont.size = Pt(14)
+    
+    objStyles2 = workingDoc.styles
+    objCharstyle2 = objStyles2.add_style('GaNParagraph', WD_STYLE_TYPE.CHARACTER)
+    objFont2 = objCharstyle2.font
+    objFont2.name = 'Calibri'
+    objFont2.size = Pt(10)
+    
+    objStyles3 = workingDoc.styles
+    objCharstyle3 = objStyles3.add_style('GaNLinks', WD_STYLE_TYPE.CHARACTER)
+    objFont3 = objCharstyle3.font
+    objFont3.name = 'Calibri'
+    objFont3.size = Pt(9.5)
+    objFont3.bold = True
+    objFont3.underline = True
+    objFont3.color.rgb = RGBColor(0,0,128)
+
+
     #Define the base language in deep_translator and translate it into de destiny language
     constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
     dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
+    print(languageBase.lower())
 
     # Replace the translations in the proper places
     for languageSelected, date in northDateReplacement.items():
@@ -307,31 +332,31 @@ def northTranslation(dirPaths):
                     if date in paragraph.text:
                         paragraph.clear()
                         if languageBase in CountryList1:
-                            paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase]+ dateTranslated)
+                            paragraph.add_run(northHeadingFirst[languageBase]+ dateTranslated +northHeadingMiddle[languageBase]+ constellationTranslated + northHeadingLast[languageBase], style = 'GaNStyle')
                         elif languageBase in CountryList2:
-                            paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated)
+                            paragraph.add_run(northHeadingFirst[languageBase]+ constellationTranslated + northHeadingMiddle[languageBase]+ str(year) +northHeadingLast[languageBase]+ dateTranslated + ".", style = 'GaNStyle' )
                         elif languageBase in CountryList3:
                             if languageBase != "Thai":      
-                                paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                paragraph.add_run(northHeadingFirst[languageBase]+ str(year) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated, style = 'GaNStyle')
                             else:
-                                paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated)
+                                paragraph.add_run(northHeadingFirst[languageBase]+ str(thaiYear) +northHeadingMiddle[languageBase] + constellationTranslated +northHeadingLast[languageBase] + dateTranslated, style = 'GaNStyle')
                     # Replace only if the constellation's name is in the paragraph
                     else:
                         paragraph.clear()
                         if(languageBase!= 'Japanese'):
-                            paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase])
+                            paragraph.add_run(firstParagraphfirst[languageBase] + constellationTranslated + firstParagraphLast[languageBase], style = 'GaNParagraph')
                         else:
-                            paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated)
+                            paragraph.add_run(firstParagraphfirst[languageBase] + firstParagraphLast[languageBase] + constellationTranslated, style = 'GaNParagraph')
                 
                 if website1 in paragraph.text:
                     newLink = paragraph.text.replace("2018",str(year))
                     paragraph.text = None
-                    paragraph.add_run(newLink)
+                    paragraph.add_run(newLink, style = 'GaNLinks')
                 
                 elif website2 in paragraph.text:
                     newLink = paragraph.text.replace("2019",str(year))
                     paragraph.text = None
-                    paragraph.add_run(newLink)
+                    paragraph.add_run(newLink, style = 'GaNLinks')
 
     #Save a copy with a new name, date and language.
     dirPath = dirPath.rsplit('_', 1)[0]
@@ -351,7 +376,7 @@ if __name__ =='__main__':
     # Get the data from the User
     year = 2022
     constellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    languages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
+    languages = ["Catalan", "Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
     
     # Creating the directories and the Paths
     directories= createDir(year, constellations)
