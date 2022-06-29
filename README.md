@@ -1,15 +1,22 @@
-# GaN
-Latest Version: 10-05-2022
+# GaN (Globe at Nigth) Activity Guides Generator
 
-This software changes the necessary information on a Globe at Night activity guide for the different languages in the northern and southern hemispheres. 
 
-It takes the dates proposed for observations at https://www.globeatnight.org/about.php, then asks for the dates of the actual constellations.
+## Table of contents
+* [Description](#description)
+* [Languages](#laguages)
+* [Constellations](#constellations)
+* [Technologies](#technologies)
+* [How it works](#how_it_works)
 
-Finally, print the requested PDF of the GaN activity guide.
+## Description
 
-The 21 Languages for the GaN Activity guide are:
+Welcome. This software makes it possible to create several Activity guides for the Globe at Night campaign, a worldwide citizen science movement, in multiple languages. Users can measure and report their observations of the night sky brightness thanks to the several Activity instructions that will be accessible in PDF format for the constellations.
+
+## Languages
+
+The 20 Languages for the GaN Activity guide are:
 Catalan
-Chinese
+Chinese (Traditional)
 Czech
 English
 Finnish
@@ -28,4 +35,47 @@ Slovenian
 Spanish
 Swedish
 Thai
-Chilean Spanish
+
+## Constellations:
+
+### Northern Hemisphere:
+Bootes
+Cygnus
+Gemini
+Hercules
+Leo
+Orion
+Pegasus
+Perseus
+Taurus
+
+### Southern Hemisphere:
+Bootes
+Canis Major
+Crux
+Grus
+Hercules
+Leo
+Orion
+Pegasus
+Sagittarius
+Scorpius
+Taurus
+
+# Technologies
+MS Word
+MS Excel
+Python:
+    os
+    time
+    sys
+    deeep_translator
+    python-docx
+    pandas
+    shutil
+    multiprocessing
+
+## How it works 
+1. The constellations and the observation dates must be created, edited and saved in the excel file: Gan_cons_and_dates.xlsx
+2. The Activity Guides changes should be edited in the word files for each languages
+3. While runnig the program the different aActivity guides for the selected contellations and languages will be created and saved.
