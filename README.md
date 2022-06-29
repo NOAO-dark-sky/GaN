@@ -15,65 +15,65 @@ Welcome. This software makes it possible to create several Activity guides for t
 ## Languages
 
 The 20 Languages for the GaN Activity guide are:
-Catalan
-Chinese (Traditional)
-Czech
-English
-Finnish
-French
-Galician
-German
-Greek
-Indonesian
-Japanese
-Polish
-Portuguese
-Romanian
-Serbian
-Slovak
-Slovenian
-Spanish
-Swedish
-Thai
+* Catalan
+* Chinese (Traditional)
+* Czech
+* English
+* Finnish
+* French
+* Galician
+* German
+* Greek
+* Indonesian
+* Japanese
+* Polish
+* Portuguese
+* Romanian
+* Serbian
+* Slovak
+* Slovenian
+* Spanish
+* Swedish
+* Thai
 
 ## Constellations:
 
 ### Northern Hemisphere:
-Bootes
-Cygnus
-Gemini
-Hercules
-Leo
-Orion
-Pegasus
-Perseus
-Taurus
+* Bootes
+* Cygnus
+* Gemini
+* Hercules
+* |Leo
+* Orion
+* Pegasus
+* Perseus
+* Taurus
 
 ### Southern Hemisphere:
-Bootes
-Canis Major
-Crux
-Grus
-Hercules
-Leo
-Orion
-Pegasus
-Sagittarius
-Scorpius
-Taurus
+* Bootes
+* Canis Major
+* Crux
+* Grus
+* Hercules
+* Leo
+* Orion
+* Pegasus
+* Sagittarius
+* Scorpius
+* Taurus
 
 # Technologies
-MS Word
-MS Excel
-Python:
-    os
-    time
-    sys
-    deeep_translator
-    python-docx
-    pandas
-    shutil
-    multiprocessing
+* MS Word
+* MS Excel
+* Python:
+    * os
+    * time
+    * sys
+    * deeep_translator
+    * python-docx
+    * pandas
+    * shutil
+    * multiprocessing
 
 ## How it works 
 1. The constellations and the observation dates must be created, edited and saved in the excel file: Gan_cons_and_dates.xlsx
