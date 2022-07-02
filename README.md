@@ -58,6 +58,7 @@ The 20 Languages for the GaN Activity guide are:
 * Leo
 * Orion
 * Pegasus
+* Perseus
 * Sagittarius
 * Scorpius
 * Taurus
