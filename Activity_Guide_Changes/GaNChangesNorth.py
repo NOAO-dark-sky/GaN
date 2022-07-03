@@ -13,12 +13,13 @@ from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
 import multiprocessing
-from GaNChangesSouth import *
+
 
 
 def importNorthData():
     # Define the path for the excel file
-    excelPath = os.path.join(sys.path[0],"GaN_cons_and_dates.xlsx")
+    excelPath = os.getcwd()
+    excelPath = os.path.join(excelPath + "\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx")
 
     # Get Data from the Excel File using Pandas
     # Capitalize  constellations names for a later comparison
@@ -362,47 +363,4 @@ def northTranslation(dirPaths):
 
 
 
-if __name__ =='__main__':
 
-    # Start time counter
-    start = time.time()
-
-    # Get the data from the User for north constellations
-    northYear = 2022
-    northConstellations = ["Perseus", "Taurus", "Gemini", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    northLanguages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
-    
-    # Creating the directories and the Paths for North Constellations
-    northDirectories= createNorthDir(northYear, northConstellations)
-    northPaths = createNorthPaths(northDirectories, northLanguages)
-
-
-    # Get the data from the User for south constellations
-    southYear = 2022
-    southConstellations = ["Orion","Canis Major", "Taurus", "Crux", "Leo", "Bootes", "Scorpius", "Hercules", "Sagittarius", "Grus", "Pegasus"]
-    southLanguages = ["English", "French", "Indonesian", "Portuguese", "Spanish",]
-
-    # Creating the directories and the Paths for South Constelllations
-    southDirectories= createSouthDir(southYear, southConstellations)
-    southPaths = createSouthPaths(southDirectories, southLanguages)
-
-    
-    #Call de translation for north constellations function, requiring multiprocessing with Pool
-    pool1 = multiprocessing.Pool(processes = 4)
-    for path in northPaths:
-        pool1.apply_async(northTranslation, args = (path, ))
-    pool1.close()
-    pool1.join()
-
-
-    #Call de translation for north constellations function, requiring multiprocessing with Pool
-    pool2 = multiprocessing.Pool(processes = 4)
-    for path in southPaths:
-        pool2.apply_async(southTranslation, args = (path, ))
-    pool2.close()
-    pool2.join()
-
-
-    # Finishing time counter and getting time of execution
-    finish = time.time() - start
-    print('Execution time: ', time.strftime("%H:%M:%S", time.gmtime(finish)))

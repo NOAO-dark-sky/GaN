@@ -14,7 +14,7 @@ def createImageDir():
     return savePath
 
 
-# Get the latitudes according to the images names in the GaN webpage
+# Get the latitudes according to the images names in the GaN webpage (north ="10", south ="10s")
 def transformLatitude(lat):
     if "N" in lat:
         lat = str(lat.rstrip(lat[-1]))
@@ -23,12 +23,12 @@ def transformLatitude(lat):
     return lat        
 
 
-# Downlaod the images and save them in the images folder
+# Download the images and save them in the images folder
 def imageDownload(constNorth, constSouth, latNorth, latSouth):
-    
+    #Change the path to the new folder
     os.chdir(createImageDir())
 
-        # Get the url in GaN website where the images are located
+    # Get the url in GaN website where the images are located
     url = 'https://www.globeatnight.org/magcharts'
     gan = requests.get(url)
     #Verify the connection
@@ -36,20 +36,22 @@ def imageDownload(constNorth, constSouth, latNorth, latSouth):
 
     # get the soup to pass the content
     soup = BeautifulSoup(gan.text, 'html.parser')
-    # Searching the "div with id = finder" where are the images links
+    # Searching the "div with id = finder" where are the images links to get the first Link
     image = soup.find('div' , attrs= {"id" : "finder"}).find('img')
+    #Get the link from the image
     imageLink = str(image['src'])
 
+    # Replace the Constellation names in the North and the latitudes in the imageLink
     for const in constNorth:
         for lat in latNorth:
             newLink = imageLink.replace("hercules", const.lower()).replace("10", transformLatitude(lat))
-
+            # Save the images in local for a later use with an easier name
             linkString = str(newLink.replace('https://www.globeatnight.org/img/2021/', '').replace('/day/600/','-'))
             with open(linkString, 'wb') as f:
                 img = requests.get(newLink)
                 f.write(img.content)
 
-
+    # Replace the Constellation names in the South and the latitudes in the imageLink
     for const in constSouth:
         for lat in latSouth:
             newLink = imageLink.replace("hercules", const.lower()).replace("10", transformLatitude(lat))

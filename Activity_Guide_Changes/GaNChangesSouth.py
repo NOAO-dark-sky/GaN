@@ -17,7 +17,8 @@ import multiprocessing
 
 def importSouthData():
     # Define the path for the excel file
-    excelPath = os.path.join(sys.path[0],"GaN_cons_and_dates.xlsx")
+    excelPath = os.getcwd()
+    excelPath = os.path.join(excelPath + "\GaN\Activity_Guide_Changes\GaN_cons_and_dates.xlsx")
 
     # Get Data from the Excel File using Pandas
     # Capitalize  constellations names for a later comparison
