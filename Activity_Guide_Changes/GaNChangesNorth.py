@@ -4,7 +4,7 @@
 # Install Pandas to manage the Excel file and bring the information
 # Import Shutil to remove the directory
 
-import os, time, sys 
+import os
 from deep_translator import GoogleTranslator  
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
@@ -12,7 +12,7 @@ from docx.shared import Pt
 from docx.shared import RGBColor
 import pandas as pd
 from shutil import rmtree
-import multiprocessing
+
 
 
 

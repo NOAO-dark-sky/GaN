@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-from IPython.display import Image, display
 import os
 from shutil import rmtree
 
@@ -25,9 +24,7 @@ def imagesLinks(constellations, latitudes):
         # Get the url in GaN website where the images are located
     url = 'https://www.globeatnight.org/magcharts'
     gan = requests.get(url)
-    #Verify the connection
-    print(gan.status_code)
-
+    
     # get the soup to pass the content
     soup = BeautifulSoup(gan.text, 'html.parser')
     # Searching the "div with id = finder" where are the images links to get the first Link
@@ -39,7 +36,7 @@ def imagesLinks(constellations, latitudes):
     # Replace the Constellation names in the North and the latitudes in the imageLink
     for const in constellations:
         for lat in latitudes:
-            newLink = imageFirstLink.replace("hercules", const.lower()).replace("10", transformLatitude(lat))
+            newLink = imageFirstLink.replace("hercules", const.lower().replace(" ", "-")).replace("10", transformLatitude(lat))
             imagesLinks.append(newLink)
     return imagesLinks       
 
@@ -47,15 +44,19 @@ def imagesLinks(constellations, latitudes):
 # Download the images and save them in the images folder
 def imageDownload(link):
     #Change the path to the new folder
-    os.chdir(r'C:\Users\Marco Moreno\OneDrive\Documentos\Enciso Systems\GaN\GaN\images')
+    newPath = os.getcwd()
+    newPath = os.path.join(newPath + "\GaN\images\\")
 
-    # Save the images in local for a later use with an easier name
-    linkString = str(link.replace('https://www.globeatnight.org/img/2021/', '').replace('/day/600/','-'))
-    with open(linkString, 'wb') as f:
-        img = requests.get(link)
-        f.write(img.content)
-        
-        return print(linkString + " has been downloaded.\n____________________________________________________________________________________________\n")
+    # Verify the status code of the link
+    if requests.get(link).status_code == 200:
+    # Save the images in a local folder for a later use with an easier name
+        linkString = str(link.replace('https://www.globeatnight.org/img/2021/', '').replace('/day/600/','-'))
+        newLinkString = os.path.join(newPath + linkString)
+        with open(newLinkString, 'wb') as f:
+            img = requests.get(link)
+            f.write(img.content)
+            
+            return print(linkString + " has been downloaded.\n____________________________________________________________________________________________\n")
 
 
 
