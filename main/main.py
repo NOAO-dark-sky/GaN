@@ -53,6 +53,23 @@ if __name__ =='__main__':
     pool2.close()
     pool2.join()
 
+    agc.createImageDir()
+    linksNorth = agc.imagesLinks(northConstellations,latitudesNorth)
+    linksSouth = agc.imagesLinks(southConstellations,latitudesSouth)
+
+        
+    pool3 = multiprocessing.Pool(processes = 4)
+    for link in linksNorth:
+        pool3.apply_async(agc.imageDownload, args = (link, ))
+    pool3.close()
+    pool3.join()
+
+    pool4 = multiprocessing.Pool(processes = 4)
+    for link in linksSouth:
+        pool4.apply_async(agc.imageDownload, args = (link, ))
+    pool4.close()
+    pool4.join()
+
 
     # Finishing time counter and getting time of execution
     finish = time.time() - start
