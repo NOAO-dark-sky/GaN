@@ -33,11 +33,13 @@ def imagesLinks(constellations, latitudes):
     imageFirstLink = str(image['src'])
 
     imagesLinks = []
+    magnitudes = ["05", "15", "25", "35", "45", "55", "65", "75"]
     # Replace the Constellation names in the North and the latitudes in the imageLink
     for const in constellations:
         for lat in latitudes:
-            newLink = imageFirstLink.replace("hercules", const.lower().replace(" ", "-")).replace("10", transformLatitude(lat))
-            imagesLinks.append(newLink)
+            for mag in magnitudes:
+                newLink = imageFirstLink.replace("hercules", const.lower().replace(" ", "-")).replace("10", transformLatitude(lat).replace("05", mag)).replace("05", mag)
+                imagesLinks.append(newLink)
     return imagesLinks       
 
 
