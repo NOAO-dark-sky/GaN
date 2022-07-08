@@ -38,18 +38,21 @@ if __name__ =='__main__':
     latitudesNorth = ["50N", "40N", "30N", "20N", "10N", "0"]
     latitudesSouth = ["0", "10S", "20S", "30S", "40S"]
 
-    
+    # Create a list from the new doc Paths for a leter use in the Images printing
+    northListPaths = []
     #Call de translation for north constellations function, requiring multiprocessing with Pool
     pool1 = multiprocessing.Pool(processes = 4)
     for path in northPaths:
-        pool1.apply_async(agc.northTranslation, args = (path, ))
+        northListPaths.append(pool1.apply_async(agc.northTranslation, args = (path, )).get())
     pool1.close()
     pool1.join()
 
+    # Create a list from the new doc Paths for a leter use in the Images printing
+    southListPaths = []
     #Call de translation for north constellations function, requiring multiprocessing with Pool
     pool2 = multiprocessing.Pool(processes = 4)
     for path in southPaths:
-        pool2.apply_async(agc.southTranslation, args = (path, ))
+        southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
     pool2.close()
     pool2.join()
 

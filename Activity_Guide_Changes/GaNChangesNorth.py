@@ -16,6 +16,7 @@ from shutil import rmtree
 
 
 
+
 def importNorthData():
     # Define the path for the excel file
     excelPath = os.getcwd()
@@ -316,7 +317,7 @@ def northTranslation(dirPaths):
     #Define the base language in deep_translator and translate it into de destiny language
     constellationTranslated =GoogleTranslator(source ='english', target = languageBase.lower()).translate(constName +" constellation")
     dateTranslated = GoogleTranslator(source ='english', target = languageBase.lower()).translate(northData.get(constName))
-
+    
     # Replace the translations in the proper places
     for languageSelected, date in northDateReplacement.items():
         if languageSelected == languageBase:
@@ -357,9 +358,12 @@ def northTranslation(dirPaths):
     dirPath = dirPath.rsplit('_', 1)[0]
     newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
     workingDoc.save(newWordPath)
-
+    
     #Print information about the working file on
-    return print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the north has been completed \n____________________________________________________________________________________________\n")
+    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the north has been completed \n____________________________________________________________________________________________\n")
+    
+    # return the new doc path to make a list with it.
+    return newWordPath
 
 
 

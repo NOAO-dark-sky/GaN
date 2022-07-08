@@ -250,8 +250,10 @@ def southTranslation(dirPaths):
     workingDoc.save(newWordPath)
 
     #Print information about the working file on
-    return print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the south has been completed \n____________________________________________________________________________________________\n")
+    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the south has been completed \n____________________________________________________________________________________________\n")
 
+    # return the new doc path to make a list with it.
+    return newWordPath
 
 
 
