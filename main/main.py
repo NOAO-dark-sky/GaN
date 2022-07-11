@@ -18,18 +18,17 @@ if __name__ =='__main__':
     # Get the data from the User for north constellations
     northYear = 2022
     northConstellations = ["Perseus", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    northLanguages = ["Catalan","Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
+    northLanguages = ["Catalan", "Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
 
     # Creating the directories and the Paths for North Constellations
     northDirectories= agc.createNorthDir(northYear, northConstellations)
     northPaths = agc.createNorthPaths(northDirectories, northLanguages)
  
 
-
     # Get the data from the User for south constellations
     southYear = northYear
     southConstellations = ["Orion","Canis Major", "Crux", "Leo", "Bootes", "Scorpius", "Hercules", "Sagittarius", "Grus", "Pegasus"]
-    southLanguages = ["English", "French", "Indonesian", "Portuguese", "Spanish",]
+    southLanguages = ["English", "French", "Indonesian", "Portuguese", "Spanish"]
 
     # Creating the directories and the Paths for South Constelllations
     southDirectories= agc.createSouthDir(southYear, southConstellations)
@@ -46,7 +45,8 @@ if __name__ =='__main__':
         northListPaths.append(pool1.apply_async(agc.northTranslation, args = (path, )).get())
     pool1.close()
     pool1.join()
-
+    
+    
     # Create a list from the new doc Paths for a leter use in the Images printing
     southListPaths = []
     #Call de translation for north constellations function, requiring multiprocessing with Pool
@@ -55,7 +55,7 @@ if __name__ =='__main__':
         southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
     pool2.close()
     pool2.join()
-
+    
     agc.createImageDir()
     linksNorth = agc.imagesLinks(northConstellations,latitudesNorth)
     linksSouth = agc.imagesLinks(southConstellations,latitudesSouth)
@@ -72,7 +72,7 @@ if __name__ =='__main__':
         pool4.apply_async(agc.imageDownload, args = (link, ))
     pool4.close()
     pool4.join()
-
+    
 
     # Finishing time counter and getting time of execution
     finish = time.time() - start
