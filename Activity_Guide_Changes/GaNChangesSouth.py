@@ -156,7 +156,7 @@ def southTranslation(dirPaths):
 
 
 # Organize the Languages by lists to make better translations
-    CountryList1 = ("Chilean_Spanish", "French", "Indonesian", "Portuguese","Spanish",)
+    CountryList1 = ("Chilean_Spanish", "French", "Indonesian", "Portuguese","Spanish")
     CountryList2 = ("English")
     
 

@@ -37,43 +37,59 @@ if __name__ =='__main__':
     latitudesNorth = ["50N", "40N", "30N", "20N", "10N", "0"]
     latitudesSouth = ["0", "10S", "20S", "30S", "40S"]
 
-    # Create a list from the new doc Paths for a leter use in the Images printing
-    northListPaths = []
-    #Call de translation for north constellations function, requiring multiprocessing with Pool
-    pool1 = multiprocessing.Pool(processes = 4)
-    for path in northPaths:
-        northListPaths.append(pool1.apply_async(agc.northTranslation, args = (path, )).get())
-    pool1.close()
-    pool1.join()
+
+    if len(northConstellations) == 0:
+        print("There are not constellations selected for the north hemisphere.")
+        pass
+    else:
+        # Create a list from the new doc Paths for a leter use in the Images printing
+        northListPaths = []
+        #Call de translation for north constellations function, requiring multiprocessing with Pool
+        pool1 = multiprocessing.Pool(processes = 4)
+        for path in northPaths:
+            northListPaths.append(pool1.apply_async(agc.northTranslation, args = (path, )).get())
+        pool1.close()
+        pool1.join()
     
     
     # Create a list from the new doc Paths for a leter use in the Images printing
     southListPaths = []
-    #Call de translation for north constellations function, requiring multiprocessing with Pool
-    pool2 = multiprocessing.Pool(processes = 4)
-    for path in southPaths:
-        southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
-    pool2.close()
-    pool2.join()
+    if len(southConstellations) == 0:
+        print("There are not constellations selected for the south hemisphere.")
+        pass
+    else:
+        #Call de translation for north constellations function, requiring multiprocessing with Pool
+        pool2 = multiprocessing.Pool(processes = 4)
+        for path in southPaths:
+            southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
+        pool2.close()
+        pool2.join()
     
     agc.createImageDir()
     linksNorth = agc.imagesLinks(northConstellations,latitudesNorth)
     linksSouth = agc.imagesLinks(southConstellations,latitudesSouth)
 
-        
-    pool3 = multiprocessing.Pool(processes = 4)
-    for link in linksNorth:
-        pool3.apply_async(agc.imageDownload, args = (link, ))
-    pool3.close()
-    pool3.join()
+    if len(northConstellations) == 0:
+        print("There are not constellations selected for the north hemisphere.")
+        pass
+    else: 
+        pool3 = multiprocessing.Pool(processes = 4)
+        for link in linksNorth:
+            pool3.apply_async(agc.imageDownload, args = (link, ))
+        pool3.close()
+        pool3.join()
 
-    pool4 = multiprocessing.Pool(processes = 4)
-    for link in linksSouth:
-        pool4.apply_async(agc.imageDownload, args = (link, ))
-    pool4.close()
-    pool4.join()
+    southListPaths = []
+    if len(southConstellations) == 0:
+        print("There are not constellations selected for the south hemisphere.")
+        pass
+    else:
+        pool4 = multiprocessing.Pool(processes = 4)
+        for link in linksSouth:
+            pool4.apply_async(agc.imageDownload, args = (link, ))
+        pool4.close()
+        pool4.join()
     
-
     # Finishing time counter and getting time of execution
     finish = time.time() - start
     print('Execution time: ', time.strftime("%H:%M:%S", time.gmtime(finish)))
