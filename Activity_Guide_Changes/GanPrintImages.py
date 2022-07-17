@@ -1,14 +1,39 @@
 from docx import Document
 from PIL import Image
 from docx.shared import Pt, Inches
+import os
 
-
+# Open the MS Word files created in the translations
 def openWordDoc(filename):
     document = Document(filename)
     return document
 
+# Get the latitudes according to the images names in the GaN webpage (north ="10", south ="10s")
+def transformLatitude(lat):
+    if "N" in lat:
+        lat = str(lat.rstrip(lat[-1]))
+    else:
+        lat = str(lat.lower())
+    return lat
+
+# get the links from the charts for each latitude
 def openImage(fileName):
-    constellation = fileName.split('_')[-2]
+    constellation = fileName.split('_')[-4]
+    latitude = fileName.split('_')[-2]
+
+    path = os.getcwd() 
+    path = os.path.join(path + "\GaN\images")
+
+    lat = transformLatitude(latitude)
+
+    magnitudes = ["05", "15", "25", "35", "45", "55", "65", "75"]
+
+    pathsList = []
+    for mag in magnitudes:
+        pathsList.append(path + "\\" + constellation + "-" + lat + "_" + mag + ".png")
+    
+    return pathsList
+
 
 
 
@@ -16,7 +41,12 @@ def openImage(fileName):
 def cutStarChart(filename):
 
     workingDoc = openWordDoc(filename)
-    openImage(filename)
+    dirCharts = openImage(filename)
+
+    for dc in dirCharts:
+        workingDoc.add_picture(dc)
+        print(dc)
+
     
     
     '''
@@ -63,7 +93,7 @@ def cutStarChart(filename):
             i = i + 1  
         '''
 
-        
+    workingDoc.save(filename)   
 
 def bigTable():
     pass
@@ -80,8 +110,6 @@ southListPaths = ['C:\\Users\\Marco Moreno\\OneDrive\\Documentos\\Enciso Systems
 path1 = northListPaths[0]
 path2 = southListPaths[0]
 print(path1)
-print(path2)
-
-#cutStarChart(path1)
+cutStarChart(path1)
 
 
