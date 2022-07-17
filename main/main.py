@@ -52,18 +52,19 @@ if __name__ =='__main__':
     
     
     # Create a list from the new doc Paths for a leter use in the Images printing
-    southListPaths = []
     if len(southConstellations) == 0:
         print("There are not constellations selected for the south hemisphere.")
         pass
     else:
         #Call de translation for north constellations function, requiring multiprocessing with Pool
+        southListPaths = []
         pool2 = multiprocessing.Pool(processes = 4)
         for path in southPaths:
             southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
         pool2.close()
         pool2.join()
-    '''
+    
+    # Activate the Scrapper
     agc.createImageDir()
     linksNorth = agc.imagesLinks(northConstellations,latitudesNorth)
     linksSouth = agc.imagesLinks(southConstellations,latitudesSouth)
@@ -78,7 +79,7 @@ if __name__ =='__main__':
         pool3.close()
         pool3.join()
 
-    southListPaths = []
+    
     if len(southConstellations) == 0:
         print("There are not constellations selected for the south hemisphere.")
         pass
@@ -88,8 +89,30 @@ if __name__ =='__main__':
             pool4.apply_async(agc.imageDownload, args = (link, ))
         pool4.close()
         pool4.join()
+
+    #Print Images in the Word Files
+
+    if len(northConstellations) == 0:
+        print("There are not constellations selected for the south hemisphere.")
+        pass
+    else:
+        pool5 = multiprocessing.Pool(processes = 4)
+        for path in northListPaths:
+            pool5.apply_async(agc.printImage, args = (path, ))
+        pool5.close()
+        pool5.join()
     
-    '''
+    if len(southConstellations) == 0:
+        print("There are not constellations selected for the south hemisphere.")
+        pass
+    else:
+        pool6 = multiprocessing.Pool(processes = 4)
+        for path in southListPaths:
+            pool6.apply_async(agc.printImage, args = (path, ))
+        pool6.close()
+        pool6.join()
+    
+    
 
     # Finishing time counter and getting time of execution
     finish = time.time() - start

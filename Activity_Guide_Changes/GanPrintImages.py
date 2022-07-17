@@ -38,7 +38,7 @@ def openImage(fileName):
 
 
 #crops an image based on the magnitude, saves image as png
-def cutStarChart(filename):
+def printImage(filename):
 
     workingDoc = openWordDoc(filename)
     dirCharts = openImage(filename)
@@ -69,18 +69,6 @@ def cutStarChart(filename):
         j = j + 1
     workingDoc.save(filename)     
 
-def bigTable():
-    pass
 
-def littleTable():
-    pass
-
-northListPaths = ['C:\\Users\\Marco Moreno\\OneDrive\\Documentos\\Enciso Systems\\GaN\\GaN\\docs_changed\\GaN_North_2022_ActivityGuide_Leo\\GaN_2022_ActivityGuide_Leo_lat_0_Spanish.docx', 'C:\\Users\\Marco Moreno\\OneDrive\\Documentos\\Enciso Systems\\GaN\\GaN\\docs_changed\\GaN_North_2022_ActivityGuide_Leo\\GaN_2022_ActivityGuide_Leo_lat_40N_Spanish.docx']
-
-southListPaths = ['C:\\Users\\Marco Moreno\\OneDrive\\Documentos\\Enciso Systems\\GaN\\GaN\\docs_changed\\GaN_South_2022_ActivityGuide_Orion\\GaN_2022_ActivityGuide_Orion_lat_10S_French.docx', 'C:\\Users\\Marco Moreno\\OneDrive\\Documentos\\Enciso Systems\\GaN\\GaN\\docs_changed\\GaN_South_2022_ActivityGuide_Orion\\GaN_2022_ActivityGuide_Orion_lat_20S_French.docx']
-
-
-for path in northListPaths:
-    cutStarChart(path)
 
 

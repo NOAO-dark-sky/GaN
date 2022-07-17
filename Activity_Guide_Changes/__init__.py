@@ -8,6 +8,10 @@ from Activity_Guide_Changes.GaNChangesSouth import southTranslation
 from Activity_Guide_Changes.GaNGetImages import createImageDir
 from Activity_Guide_Changes.GaNGetImages import imagesLinks
 from Activity_Guide_Changes.GaNGetImages import imageDownload
+from Activity_Guide_Changes.GaNPrintImages import openWordDoc
+from Activity_Guide_Changes.GaNPrintImages import transformLatitude
+from Activity_Guide_Changes.GaNPrintImages import openImage
+from Activity_Guide_Changes.GaNPrintImages import printImage
 
 
 
