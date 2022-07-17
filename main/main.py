@@ -19,7 +19,7 @@ if __name__ =='__main__':
     northYear = 2022
     northConstellations = ["Leo"]
     northLanguages = ["Spanish"]
-    latitudesNorth = ["0" , "10N"]
+    latitudesNorth = ["0" , "40N"]
     
 
     # Creating the directories and the Paths for North Constellations
@@ -90,11 +90,6 @@ if __name__ =='__main__':
         pool4.join()
     
     '''
-    print(northListPaths)
-    print("\n\n")
-    print(southListPaths)
-
-    
 
     # Finishing time counter and getting time of execution
     finish = time.time() - start
