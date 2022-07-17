@@ -370,7 +370,7 @@ def northTranslation(dirPaths):
     workingDoc.save(newWordPath)
     
     #Print information about the working file on
-    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the latitude {lat}".format(lat = latitude) +" north has been completed \n____________________________________________________________________________________________\n")
+    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the latitude {lat}".format(lat = latitude) +" north has been completed \n___________________________________________________________________________________________________________\n")
     
     # return the new doc path to make a list with it.
     return newWordPath
