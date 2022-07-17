@@ -17,27 +17,26 @@ if __name__ =='__main__':
 
     # Get the data from the User for north constellations
     northYear = 2022
-    northConstellations = ["Perseus", "Leo", "Bootes", "Cygnus", "Pegasus", "Orion", "Hercules"]
-    northLanguages = ["Catalan", "Chinese", "Czech", "English", "Finnish", "French", "Galician", "German", "Greek", "Indonesian", "Japanese", "Polish", "Portuguese", "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish", "Thai"]
+    northConstellations = ["Leo"]
+    northLanguages = ["Spanish"]
+    latitudesNorth = ["0" , "10N"]
+    
 
     # Creating the directories and the Paths for North Constellations
     northDirectories= agc.createNorthDir(northYear, northConstellations)
-    northPaths = agc.createNorthPaths(northDirectories, northLanguages)
+    northPaths = agc.createNorthPaths(northDirectories, northLanguages, latitudesNorth)
  
 
     # Get the data from the User for south constellations
     southYear = northYear
-    southConstellations = ["Orion","Canis Major", "Crux", "Leo", "Bootes", "Scorpius", "Hercules", "Sagittarius", "Grus", "Pegasus"]
-    southLanguages = ["English", "French", "Indonesian", "Portuguese", "Spanish"]
+    southConstellations = ["Orion"]
+    southLanguages = ["French"]
+    latitudesSouth = ["10S", "20S"]
 
     # Creating the directories and the Paths for South Constelllations
     southDirectories= agc.createSouthDir(southYear, southConstellations)
-    southPaths = agc.createSouthPaths(southDirectories, southLanguages)
-
-    latitudesNorth = ["50N", "40N", "30N", "20N", "10N", "0"]
-    latitudesSouth = ["0", "10S", "20S", "30S", "40S"]
-
-
+    southPaths = agc.createSouthPaths(southDirectories, southLanguages,latitudesSouth)
+    
     if len(northConstellations) == 0:
         print("There are not constellations selected for the north hemisphere.")
         pass
@@ -64,11 +63,11 @@ if __name__ =='__main__':
             southListPaths.append(pool2.apply_async(agc.southTranslation, args = (path, )).get())
         pool2.close()
         pool2.join()
-    
+    '''
     agc.createImageDir()
     linksNorth = agc.imagesLinks(northConstellations,latitudesNorth)
     linksSouth = agc.imagesLinks(southConstellations,latitudesSouth)
-
+    
     if len(northConstellations) == 0:
         print("There are not constellations selected for the north hemisphere.")
         pass
@@ -90,6 +89,13 @@ if __name__ =='__main__':
         pool4.close()
         pool4.join()
     
+    '''
+    print(northListPaths)
+    print("\n\n")
+    print(southListPaths)
+
+    
+
     # Finishing time counter and getting time of execution
     finish = time.time() - start
     print('Execution time: ', time.strftime("%H:%M:%S", time.gmtime(finish)))

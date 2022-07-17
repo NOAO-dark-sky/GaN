@@ -55,14 +55,13 @@ def createSouthDir(year, constellations):
     
     return paths
 
-def createSouthPaths(directories, languages):
-    direcs = directories
-    langs = languages
+def createSouthPaths(directories, languages, latitudes):
 
     dirPaths = []
-    for lang in langs:
-        for direc in direcs:
-            dirPaths.append(direc + "_" + lang)
+    for lang in languages:
+        for direc in directories:
+            for lat in latitudes:
+                dirPaths.append(direc + "_" + lat + "_" + lang)
     return dirPaths
 
 
@@ -162,9 +161,10 @@ def southTranslation(dirPaths):
 
     # Getting data from the Paths
     languageBase = dirPath.split('_')[-1]
-    constName = dirPath.split('_')[-2]
-    year = dirPath.split('_')[-4]
-    thaiYear = int(year)+ 543
+    latitude = dirPath.split('_')[-2]
+    constName = dirPath.split('_')[-3]
+    year = dirPath.split('_')[-5]
+    #thaiYear = int(year)+ 543
 
     #Be sure to change the websites into the word files
     website1 = "astro/maps/GaNight/2018/"
@@ -240,12 +240,12 @@ def southTranslation(dirPaths):
                     paragraph.add_run(newLink, style = 'GaNLinks')
 
     #Save a copy with a new name, date and language.
-    dirPath = dirPath.rsplit('_', 1)[0]
-    newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_South_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
+    dirPath = dirPath.rsplit('_', 2)[0]
+    newWordPath = os.path.join(dirPath + "\\GaN_{year}_ActivityGuide_{cons}_lat_".format(year = year, cons = constName) + str(latitude) + "_" + str(languageBase) + ".docx")
     workingDoc.save(newWordPath)
 
     #Print information about the working file on
-    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the south has been completed \n____________________________________________________________________________________________\n")
+    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the latitude {lat}".format(lat = latitude) +" south has been completed \n____________________________________________________________________________________________\n")
 
     # return the new doc path to make a list with it.
     return newWordPath

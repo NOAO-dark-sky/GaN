@@ -58,14 +58,13 @@ def createNorthDir(year, constellations):
     
     return paths
 
-def createNorthPaths(directories, languages):
-    direcs = directories
-    langs = languages
+def createNorthPaths(directories, languages, latitudes):
 
     dirPaths = []
-    for lang in langs:
-        for direc in direcs:
-            dirPaths.append(direc + "_" + lang)
+    for lang in languages:
+        for direc in directories:
+            for lat in latitudes:
+                dirPaths.append(direc + "_" + lat + "_" + lang)
     return dirPaths
 
 
@@ -271,8 +270,9 @@ def northTranslation(dirPaths):
     
     # Getting data from the Paths
     languageBase = dirPath.split('_')[-1]
-    constName = dirPath.split('_')[-2]
-    year = dirPath.split('_')[-4]
+    latitude = dirPath.split('_')[-2]
+    constName = dirPath.split('_')[-3]
+    year = dirPath.split('_')[-5]
     thaiYear = int(year)+ 543
 
     #Be sure to change the websites into the word files
@@ -283,7 +283,7 @@ def northTranslation(dirPaths):
     # Define the Word file path as the original file
     wordPath = os.path.abspath("..\Gan\GaN\docs_to_change\GaN2018_ActivityGuide_Perseus_N_")
     workingDoc = openWordDoc1(wordPath + str(languageBase) + ".docx")
-
+    
     # Chinese in not in the dictionary of deep_translator, is better "chinese (traditional)"
     if languageBase != "Chinese":
         languageBase = languageBase
@@ -363,14 +363,14 @@ def northTranslation(dirPaths):
                     newLink = paragraph.text.replace("2019",str(year))
                     paragraph.text = None
                     paragraph.add_run(newLink, style = 'GaNLinks')
-
-    #Save a copy with a new name, date and language.
-    dirPath = dirPath.rsplit('_', 1)[0]
-    newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_North_{cons}_".format(year = year, cons = constName) + str(languageBase) + ".docx")
+    
+    #Save a copy with a new constellation name, date and language.
+    dirPath = dirPath.rsplit('_', 2)[0]
+    newWordPath = os.path.join(dirPath + "\GaN_{year}_ActivityGuide_{cons}_lat_".format(year = year, cons = constName) + str(latitude) + "_" + str(languageBase) + ".docx")
     workingDoc.save(newWordPath)
     
     #Print information about the working file on
-    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the north has been completed \n____________________________________________________________________________________________\n")
+    print("The " + languageBase + " activity guide for the constellation {cons}".format(cons = constName) + " in the latitude {lat}".format(lat = latitude) +" north has been completed \n____________________________________________________________________________________________\n")
     
     # return the new doc path to make a list with it.
     return newWordPath
